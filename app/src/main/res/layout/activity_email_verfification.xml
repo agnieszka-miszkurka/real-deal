@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".products.EmailVerfificationActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email_not_verified"
+        android:textSize="@dimen/h1"
+        android:layout_marginTop="12dp"
+        android:textColor="#1b1919"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_to_send_verification_email"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+
+    <Button
+        android:id="@+id/send_email_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/send_email"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_to_refresh_activity"
+        android:layout_gravity="center_vertical|center_horizontal"/>
+
+    <Button
+        android:id="@+id/refresh_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="8dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/refresh"
+        android:textColor="#ffffff" />
+
+</LinearLayout>

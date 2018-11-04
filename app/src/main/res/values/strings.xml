@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">RealDeal</string>
-    <string name="action_settings">Settings</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="email_not_verified">Your email is not verified.</string>
+    <string name="text_to_send_verification_email">Tap this button to send verification email.</string>
+    <string name="text_to_refresh_activity">If you already verified your email, refresh this page:</string>
+    <string name="send_email">SEND EMAIL</string>
+    <string name="refresh">REFRESH</string>
 </resources>
