@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             itemNames.add("Item number " + i);
         }
     }
+
     private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: started");
         RecyclerView recyclerView = findViewById(R.id.recycler_view);

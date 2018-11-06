@@ -59,6 +59,7 @@ public class SearchListRecyclerViewAdapter extends RecyclerView.Adapter<SearchLi
             super(itemView);
             itemName = itemView.findViewById(R.id.list_item_name);
             parentLayout = itemView.findViewById(R.id.search_list_parent_item);
+
         }
     }
 }
