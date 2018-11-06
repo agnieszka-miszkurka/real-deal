@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +20,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     String mUsername;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+
+    private String TAG = "MainActivity";
+    private ArrayList<String> itemNames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        prepareItems();
+        initRecyclerView();
     }
 
     @Override
@@ -137,4 +146,17 @@ public class MainActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(mAuthStateListener);
     }
 
+    private void prepareItems() {
+        Log.d(TAG, "prepareItems: started");
+        for (int i=0;i<20;i++) {
+            itemNames.add("Item number " + i);
+        }
+    }
+    private void initRecyclerView() {
+        Log.d(TAG, "initRecyclerView: started");
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        SearchListRecyclerViewAdapter adapter = new SearchListRecyclerViewAdapter(this, itemNames);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 }
