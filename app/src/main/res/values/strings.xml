@@ -6,4 +6,15 @@
     <string name="text_to_refresh_activity">If you already verified your email, refresh this page:</string>
     <string name="send_email">SEND EMAIL</string>
     <string name="refresh">REFRESH</string>
+    <string name="add_product">Add product</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_addproduct_message">All fields are required</string>
+    <string name="name_of_the_product">Name of the product</string>
+    <string name="search_phrase">Search phrase</string>
+    <string name="minimum_price">Minimum price</string>
+    <string name="maximum_price">Maximum price</string>
+    <string name="add">ADD</string>
+    <string name="shopping_bag">shopping bag</string>
 </resources>

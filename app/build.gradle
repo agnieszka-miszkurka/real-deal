@@ -40,4 +40,5 @@ dependencies {
     testImplementation "com.google.truth:truth:0.42"
     testImplementation "org.robolectric:robolectric:4.0.1"
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 }
