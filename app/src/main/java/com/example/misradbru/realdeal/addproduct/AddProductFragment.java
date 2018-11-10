@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.misradbru.realdeal.R;
+import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +27,8 @@ public class AddProductFragment extends Fragment implements AddProductContract.V
     private TextView SearchPhraseTextView;
     private TextView MinPriceTextView;
     private TextView MaxPriceTextView;
+
+    private String userID;
 
     private Button AddButton;
 
@@ -56,7 +59,12 @@ public class AddProductFragment extends Fragment implements AddProductContract.V
 
         AddButton = root.findViewById(R.id.addNewProductBtn);
 
-        mActionListener = new AddProductPresenter();
+        mActionListener = new AddProductPresenter(this, new ProductRepositoryImpl());
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            userID = bundle.getString("UID", "0");
+        }
 
         AddButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +73,8 @@ public class AddProductFragment extends Fragment implements AddProductContract.V
                         ProductNameTextView.getText().toString(),
                         SearchPhraseTextView.getText().toString(),
                         MinPriceTextView.getText().toString(),
-                        MaxPriceTextView.getText().toString()
+                        MaxPriceTextView.getText().toString(),
+                        userID
                 );
             }
         });
@@ -75,14 +84,21 @@ public class AddProductFragment extends Fragment implements AddProductContract.V
 
 
     @Override
-    public void showEmptyNoteError() {
+    public void showEmptyProductError() {
         Snackbar.make(ProductNameTextView,
                 getString(R.string.empty_addproduct_message), Snackbar.LENGTH_LONG).show();
 
     }
 
     @Override
-    public void showNotesList() {
+    public void showMinMaxPriceMismatch() {
+        Snackbar.make(MinPriceTextView,
+                getString(R.string.pricemismatch_addproduct_message), Snackbar.LENGTH_LONG).show();
+
+    }
+
+    @Override
+    public void showProductList() {
         Activity activity = getActivity();
         assert activity != null;
         activity.setResult(Activity.RESULT_OK);

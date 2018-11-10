@@ -17,4 +17,5 @@
     <string name="maximum_price">Maximum price</string>
     <string name="add">ADD</string>
     <string name="shopping_bag">shopping bag</string>
+    <string name="pricemismatch_addproduct_message">Min value must be less than max value</string>
 </resources>
