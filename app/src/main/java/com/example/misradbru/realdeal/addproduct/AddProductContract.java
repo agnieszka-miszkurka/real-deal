@@ -4,15 +4,18 @@ public interface AddProductContract {
 
     interface View {
 
-        void showEmptyNoteError();
+        void showEmptyProductError();
 
-        void showNotesList();
+        void showProductList();
+
+        void showMinMaxPriceMismatch();
 
     }
 
     interface UserActionsListener {
 
-        void saveProduct(String productName, String searchPhrase, String minPrice, String maxPrice);
+        void saveProduct(String productName, String searchPhrase, String minPrice, String maxPrice,
+                         String uid);
 
     }
 }
