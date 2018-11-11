@@ -20,6 +20,7 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -42,6 +43,22 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        authenticate();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        prepareItems();
+        initRecyclerView();
+    }
+
+    private void authenticate() {
         mAuth = FirebaseAuth.getInstance();
 
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
@@ -66,20 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        prepareItems();
-        initRecyclerView();
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -148,12 +152,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareItems() {
         Log.d(TAG, "prepareItems: started");
-        for (int i=0;i<20;i++) {
-            itemNames.add("Item number " + i);
-        }
+        SearchListItemsProvider provider = new SearchListItemsProvider();
+        itemNames = provider.provideItems();
     }
 
-    private void initRecyclerView() {
+    public void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: started");
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         SearchListRecyclerViewAdapter adapter = new SearchListRecyclerViewAdapter(this, itemNames);
