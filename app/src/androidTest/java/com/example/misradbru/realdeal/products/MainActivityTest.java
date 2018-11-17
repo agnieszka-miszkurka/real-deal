@@ -28,7 +28,7 @@ public class MainActivityTest {
     }
     @Test
     public void testLaunch() {
-        View view = mainActivity.findViewById(R.id.recycler_view);
+        View view = mainActivity.findViewById(R.id.products_list);
         assertNotNull(view);
     }
 }

@@ -15,22 +15,12 @@ import android.widget.ListView;
 
 import com.example.misradbru.realdeal.R;
 import com.example.misradbru.realdeal.addproduct.AddProductActivity;
-import com.example.misradbru.realdeal.data.Product;
-import com.example.misradbru.realdeal.data.ProductRepository;
 import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,10 +29,8 @@ public class MainActivity extends AppCompatActivity {
     String mUsername;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    private ProductRepository productRepository;
 
     private String TAG = "MainActivity";
-    private ArrayList<String> itemNames = new ArrayList<>();
 
     private ListView mProductListView;
 
@@ -54,12 +42,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mProductListView = findViewById(R.id.products_list);
-        productRepository = new ProductRepositoryImpl();
 
         authenticate();
-
-       // prepareItems();
-       // initRecyclerView();
     }
 
     private void authenticate() {
@@ -73,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     checkIfEmailVerified(user, "ON_CREATE");
                     onSignedInInitialize(user.getDisplayName());
+                    createProductsList();
                 } else {
                     onSignedOutCleanUp();
                     startActivityForResult(
@@ -117,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
     void checkIfEmailVerified(FirebaseUser user, String context) {
         if (user.isEmailVerified()) {
             Log.d(context, "Email verified");
-            createProductsList();
         } else {
             Log.d(context, "Email not verified");
             Intent intent = new Intent(this, EmailVerfificationActivity.class)
@@ -128,34 +112,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createProductsList() {
-
-        final List<Product> mProductList = new ArrayList<>();
-        final ProductsAdapter mProductsAdapter = new ProductsAdapter(this, mProductList);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("products")
-                .whereEqualTo("uid", mAuth.getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            for(QueryDocumentSnapshot document : task.getResult()){
-
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                Product product = document.toObject(Product.class);
-                                mProductList.add(product);
-                            }
-                            mProductListView.setAdapter(mProductsAdapter);
-
-                        }
-                        else {
-                            Log.d("MissionActivity", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
-
+       ProductRepositoryImpl repository = new ProductRepositoryImpl();
+       repository.getProducts(mAuth,this,mProductListView);
     }
 
     @Override
@@ -195,18 +153,4 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         mAuth.removeAuthStateListener(mAuthStateListener);
     }
-
-//    private void prepareItems() {
-//        Log.d(TAG, "prepareItems: started");
-//        SearchListItemsProvider provider = new SearchListItemsProvider();
-//        itemNames = provider.provideItems();
-//    }
-
-//    public void initRecyclerView() {
-//        Log.d(TAG, "initRecyclerView: started");
-//        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-//        SearchListRecyclerViewAdapter adapter = new SearchListRecyclerViewAdapter(this, itemNames);
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//    }
 }
