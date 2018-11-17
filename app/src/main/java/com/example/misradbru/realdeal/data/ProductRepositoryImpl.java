@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
 public class ProductRepositoryImpl implements ProductRepository {
     private final String TAG = "ProductRepositoryImpl";
+    private final String PRODUCTS_COLLECTION = "products";
     private FirebaseFirestore db;
 
     public ProductRepositoryImpl() {
@@ -23,7 +24,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public void saveProduct(@NonNull Product product) {
-        db.collection("products")
+        db.collection(PRODUCTS_COLLECTION)
                 .add(product)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

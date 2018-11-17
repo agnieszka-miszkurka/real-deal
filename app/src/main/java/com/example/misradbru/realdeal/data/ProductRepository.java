@@ -8,5 +8,4 @@ import android.support.annotation.NonNull;
  */
 public interface ProductRepository {
     void saveProduct(@NonNull Product product);
-
 }
