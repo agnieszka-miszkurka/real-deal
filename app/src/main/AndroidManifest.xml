@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".products.EmailVerfificationActivity" />
-        <activity android:name=".addproduct.AddProductActivity"/>
+        <activity android:name=".addproduct.AddProductActivity" />
+        <activity android:name=".foundproducts.FoundProductsActivity"/>
     </application>
 
 </manifest>
