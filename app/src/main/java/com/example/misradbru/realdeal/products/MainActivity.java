@@ -6,24 +6,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 import com.example.misradbru.realdeal.R;
 import com.example.misradbru.realdeal.addproduct.AddProductActivity;
+import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     private String TAG = "MainActivity";
-    private ArrayList<String> itemNames = new ArrayList<>();
+
+    private ListView mProductListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +41,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        authenticate();
+        mProductListView = findViewById(R.id.products_list);
 
-        prepareItems();
-        initRecyclerView();
+        authenticate();
     }
 
     private void authenticate() {
@@ -60,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     checkIfEmailVerified(user, "ON_CREATE");
                     onSignedInInitialize(user.getDisplayName());
+                    createProductsList();
                 } else {
                     onSignedOutCleanUp();
                     startActivityForResult(
@@ -113,6 +111,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void createProductsList() {
+       ProductRepositoryImpl repository = new ProductRepositoryImpl();
+       repository.getProducts(mAuth,this,mProductListView);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -149,19 +152,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mAuth.removeAuthStateListener(mAuthStateListener);
-    }
-
-    private void prepareItems() {
-        Log.d(TAG, "prepareItems: started");
-        SearchListItemsProvider provider = new SearchListItemsProvider();
-        itemNames = provider.provideItems();
-    }
-
-    public void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView: started");
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        SearchListRecyclerViewAdapter adapter = new SearchListRecyclerViewAdapter(this, itemNames);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }
