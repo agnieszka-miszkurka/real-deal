@@ -5,12 +5,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.ListView;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.misradbru.realdeal.foundproducts.FoundProductsAdapter;
 
 /**
  * Main entry point for accessing products data.
  */
 public interface ProductRepository {
     void saveProduct(@NonNull Product product);
-    void getProducts(FirebaseAuth mAuth, Context context, final ListView mProductListView);
+    void getProducts(String userId, Context context, final ListView mProductListView);
+    void getFoundProducts(String searchPhrase, final FoundProductsAdapter foundProductsAdapter);
 }

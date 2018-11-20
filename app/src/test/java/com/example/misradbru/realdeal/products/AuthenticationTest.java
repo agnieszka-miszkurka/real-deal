@@ -2,11 +2,11 @@ package com.example.misradbru.realdeal.products;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.runners.JUnit4;
 
 import static com.google.common.truth.Truth.assertThat;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class AuthenticationTest {
 
     private static final String ANONYMOUS = "anonymous";
