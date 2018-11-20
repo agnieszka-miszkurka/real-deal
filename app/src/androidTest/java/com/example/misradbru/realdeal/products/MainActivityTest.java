@@ -4,12 +4,11 @@ import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 
 import com.example.misradbru.realdeal.R;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -23,7 +22,6 @@ public class MainActivityTest {
     private MainActivity mainActivity = null;
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(SearchListItemsProvider.class);
         mainActivity  = mActivityRule.getActivity();
     }
     @Test

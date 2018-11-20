@@ -21,11 +21,12 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_productname, parent, false);
         }
 
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.list_item_name);
+        TextView titleTextView = convertView.findViewById(R.id.list_item_name);
         Product product = getItem(position);
+        assert product != null;
         titleTextView.setText(product.getName());
 
         return convertView;

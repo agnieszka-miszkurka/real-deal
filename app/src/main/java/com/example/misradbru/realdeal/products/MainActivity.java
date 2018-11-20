@@ -11,11 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.misradbru.realdeal.R;
 import com.example.misradbru.realdeal.addproduct.AddProductActivity;
+import com.example.misradbru.realdeal.data.Product;
 import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
+import com.example.misradbru.realdeal.foundproducts.FoundProductsActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +45,19 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mProductListView = findViewById(R.id.products_list);
+
+        mProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Product clickedProduct = (Product) parent.getAdapter().getItem(position);
+
+                Intent intent = new Intent(getApplicationContext(), FoundProductsActivity.class);
+                intent.putExtra(FoundProductsActivity.PRODUCT_NAME, clickedProduct.getName());
+                intent.putExtra(FoundProductsActivity.SEARCH_PHRASE, clickedProduct.getSearchPhrase());
+                intent.putExtra(FoundProductsActivity.UID, clickedProduct.getUid());
+                startActivity(intent);
+            }
+        });
 
         authenticate();
     }
@@ -113,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void createProductsList() {
        ProductRepositoryImpl repository = new ProductRepositoryImpl();
-       repository.getProducts(mAuth,this,mProductListView);
+       repository.getProducts(mAuth.getUid(),this,mProductListView);
     }
 
     @Override
