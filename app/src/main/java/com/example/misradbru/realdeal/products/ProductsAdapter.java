@@ -1,6 +1,7 @@
 package com.example.misradbru.realdeal.products;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +20,14 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public @NonNull View getView(int position, View convertView, ViewGroup parent){
         if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_productname, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_productname, parent, false);
         }
 
         TextView titleTextView = convertView.findViewById(R.id.list_item_name);
         Product product = getItem(position);
+
         assert product != null;
         titleTextView.setText(product.getName());
 
