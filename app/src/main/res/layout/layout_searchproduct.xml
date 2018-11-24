@@ -10,7 +10,6 @@
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/normal_margin"
         android:fontFamily="sans-serif-condensed"
-        android:text="Sample text"
         android:textColor="#000"
         android:textSize="25sp" />
 </RelativeLayout>

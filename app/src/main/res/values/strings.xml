@@ -7,7 +7,7 @@
     <string name="send_email">SEND EMAIL</string>
     <string name="refresh">REFRESH</string>
     <string name="title_activity_search_list">SearchListActivity</string>
-    <string name="add_product">Add product</string>
+    <string name="add_product">Add searchProduct</string>
     <string name="empty_addproduct_message">All fields are required</string>
     <string name="name_of_the_product">Name of the product</string>
     <string name="search_phrase">Search phrase</string>

@@ -1,4 +1,4 @@
-package com.example.misradbru.realdeal.products;
+package com.example.misradbru.realdeal.searches;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

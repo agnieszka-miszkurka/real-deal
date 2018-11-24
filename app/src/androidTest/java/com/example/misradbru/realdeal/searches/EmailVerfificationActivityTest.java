@@ -1,4 +1,4 @@
-package com.example.misradbru.realdeal.products;
+package com.example.misradbru.realdeal.searches;
 
 import android.support.test.rule.ActivityTestRule;
 import android.view.View;

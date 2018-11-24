@@ -1,6 +1,6 @@
-package com.example.misradbru.realdeal.addproduct;
+package com.example.misradbru.realdeal.addsearch;
 
-public interface AddProductContract {
+public interface AddSearchContract {
 
     interface View {
 
