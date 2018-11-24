@@ -26,7 +26,7 @@ public class AddSearchPresenter implements AddSearchContract.UserActionsListener
             Integer maxPriceInt = Integer.valueOf(maxPrice);
             if (minPriceInt < maxPriceInt) {
                 SearchProduct searchProduct = new SearchProduct(productName, searchPhrase, minPriceInt, maxPriceInt, uid);
-                mProductRepository.saveProduct(searchProduct);
+                mProductRepository.saveSearchProduct(searchProduct);
                 mAddProductView.showProductList();
             } else {
                 mAddProductView.showMinMaxPriceMismatch();

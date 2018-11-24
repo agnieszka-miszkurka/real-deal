@@ -1,9 +1,7 @@
 package com.example.misradbru.realdeal.data;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.example.misradbru.realdeal.foundproducts.FoundProductsAdapter;
 import com.example.misradbru.realdeal.searches.SearchesAdapter;
@@ -36,7 +34,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void saveProduct(@NonNull SearchProduct searchProduct) {
+    public void saveSearchProduct(@NonNull SearchProduct searchProduct) {
         db.collection(SEARCHES_COLLECTION)
                 .add(searchProduct)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -54,9 +52,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void getProducts(String userId, Context context, final ListView mProductListView) {
+    public void getSearches(String userId, final SearchesAdapter mSearchesAdapter) {
         final List<SearchProduct> mSearchProductList = new ArrayList<>();
-        final SearchesAdapter mSearchesAdapter = new SearchesAdapter(context, mSearchProductList);
         FirebaseFirestore db = FirebaseFirestore.getInstance();  // TODO: check if it's necessary
         db.collection(SEARCHES_COLLECTION)
                 .whereEqualTo("uid", userId)
@@ -70,7 +67,8 @@ public class ProductRepositoryImpl implements ProductRepository {
                                 SearchProduct searchProduct = document.toObject(SearchProduct.class);
                                 mSearchProductList.add(searchProduct);
                             }
-                            mProductListView.setAdapter(mSearchesAdapter);
+                            mSearchesAdapter.addAll(mSearchProductList);
+                            mSearchesAdapter.notifyDataSetChanged();
                         }
                         else {
                             Log.d(TAG, "Error getting documents: ", task.getException());

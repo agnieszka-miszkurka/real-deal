@@ -55,7 +55,7 @@ public class AddSearchProductPresenterTest {
         mAddSearchPresenter.saveProduct("Bike", "Bike Giant", "20", "30", "UID");
 
         // Then a product is,
-        verify(productRepository).saveProduct(any(SearchProduct.class)); // saved to the model
+        verify(productRepository).saveSearchProduct(any(SearchProduct.class)); // saved to the model
         verify(mAddProductView).showProductList(); // shown in the UI
     }
 }

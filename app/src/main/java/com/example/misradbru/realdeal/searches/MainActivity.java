@@ -13,25 +13,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.misradbru.realdeal.R;
 import com.example.misradbru.realdeal.addsearch.AddSearchActivity;
-import com.example.misradbru.realdeal.data.SearchProduct;
 import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
+import com.example.misradbru.realdeal.data.SearchProduct;
 import com.example.misradbru.realdeal.foundproducts.FoundProductsActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchesContract.View{
 
     private static final int RC_SIGN_IN = 123;
     public static final String ANONYMOUS = "anonymous";
     String mUsername;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private SearchesContract.UserActionListener mActionsListener;
+    private ProgressBar mProgressBar;
 
     private String TAG = "MainActivity";
 
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mProductListView = findViewById(R.id.products_list);
+        mProgressBar = findViewById(R.id.searches_progressbar);
+        mActionsListener = new SearchesPresenter(new ProductRepositoryImpl(), this);
 
         mProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -73,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     checkIfEmailVerified(user, "ON_CREATE");
                     onSignedInInitialize(user.getDisplayName());
-                    createProductsList();
+                    //createProductsList();
                 } else {
                     onSignedOutCleanUp();
                     startActivityForResult(
@@ -93,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: change to MVP model
                 Intent intent =  new Intent(getApplicationContext(), AddSearchActivity.class);
                 startActivity(intent);
             }
@@ -128,10 +133,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void createProductsList() {
-       ProductRepositoryImpl repository = new ProductRepositoryImpl();
-       repository.getProducts(mAuth.getUid(),this,mProductListView);
-    }
+//    private void createProductsList() {
+//       ProductRepositoryImpl repository = new ProductRepositoryImpl();
+//        SearchesAdapter mSearchesAdapter =
+//                new SearchesAdapter(this.getApplicationContext(), new ArrayList<SearchProduct>());
+//        mProductListView.setAdapter(mSearchesAdapter);
+//       repository.getSearches(mAuth.getUid(),mSearchesAdapter);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,6 +170,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        SearchesAdapter mSearchesAdapter =
+                new SearchesAdapter(this.getApplicationContext(), new ArrayList<SearchProduct>());
+        mProductListView.setAdapter(mSearchesAdapter);
+        mActionsListener.showFoundProducts(mAuth.getUid(), mSearchesAdapter);
         mAuth.addAuthStateListener(mAuthStateListener);
     }
 
@@ -169,5 +181,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
+    public void setProgressIndicator(boolean active) {
+        if (active) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mProductListView.setVisibility(View.GONE);
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+            mProductListView.setVisibility(View.VISIBLE);
+        }
     }
 }
