@@ -1,4 +1,4 @@
-package com.example.misradbru.realdeal.products;
+package com.example.misradbru.realdeal.searches;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.misradbru.realdeal.R;
-import com.example.misradbru.realdeal.addproduct.AddProductActivity;
-import com.example.misradbru.realdeal.data.Product;
+import com.example.misradbru.realdeal.addsearch.AddSearchActivity;
+import com.example.misradbru.realdeal.data.SearchProduct;
 import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
 import com.example.misradbru.realdeal.foundproducts.FoundProductsActivity;
 import com.firebase.ui.auth.AuthUI;
@@ -49,12 +49,12 @@ public class MainActivity extends AppCompatActivity {
         mProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Product clickedProduct = (Product) parent.getAdapter().getItem(position);
+                SearchProduct clickedSearchProduct = (SearchProduct) parent.getAdapter().getItem(position);
 
                 Intent intent = new Intent(getApplicationContext(), FoundProductsActivity.class);
-                intent.putExtra(FoundProductsActivity.PRODUCT_NAME, clickedProduct.getName());
-                intent.putExtra(FoundProductsActivity.SEARCH_PHRASE, clickedProduct.getSearchPhrase());
-                intent.putExtra(FoundProductsActivity.UID, clickedProduct.getUid());
+                intent.putExtra(FoundProductsActivity.PRODUCT_NAME, clickedSearchProduct.getName());
+                intent.putExtra(FoundProductsActivity.SEARCH_PHRASE, clickedSearchProduct.getSearchPhrase());
+                intent.putExtra(FoundProductsActivity.UID, clickedSearchProduct.getUid());
                 startActivity(intent);
             }
         });
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: change to MVP model
-                Intent intent =  new Intent(getApplicationContext(), AddProductActivity.class);
+                Intent intent =  new Intent(getApplicationContext(), AddSearchActivity.class);
                 startActivity(intent);
             }
         });

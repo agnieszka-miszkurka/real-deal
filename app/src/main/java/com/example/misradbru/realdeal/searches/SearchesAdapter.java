@@ -1,4 +1,4 @@
-package com.example.misradbru.realdeal.products;
+package com.example.misradbru.realdeal.searches;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,27 +9,27 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.misradbru.realdeal.R;
-import com.example.misradbru.realdeal.data.Product;
+import com.example.misradbru.realdeal.data.SearchProduct;
 
 import java.util.List;
 
-public class ProductsAdapter extends ArrayAdapter<Product> {
+public class SearchesAdapter extends ArrayAdapter<SearchProduct> {
 
-    public ProductsAdapter(Context context, List<Product> objects) {
+    public SearchesAdapter(Context context, List<SearchProduct> objects) {
         super(context, 0, objects);
     }
 
     @Override
     public @NonNull View getView(int position, View convertView, ViewGroup parent){
         if(convertView == null){
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_productname, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_searchproduct, parent, false);
         }
 
         TextView titleTextView = convertView.findViewById(R.id.list_item_name);
-        Product product = getItem(position);
+        SearchProduct searchProduct = getItem(position);
 
-        assert product != null;
-        titleTextView.setText(product.getName());
+        assert searchProduct != null;
+        titleTextView.setText(searchProduct.getName());
 
         return convertView;
     }

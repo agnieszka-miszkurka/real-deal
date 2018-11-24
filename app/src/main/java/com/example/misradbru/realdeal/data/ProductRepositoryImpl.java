@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 import com.example.misradbru.realdeal.foundproducts.FoundProductsAdapter;
-import com.example.misradbru.realdeal.products.ProductsAdapter;
+import com.example.misradbru.realdeal.searches.SearchesAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,7 +23,8 @@ import java.util.Objects;
 
 public class ProductRepositoryImpl implements ProductRepository {
     private final String TAG = "ProductRepositoryImpl";
-    private final String PRODUCTS_COLLECTION = "products";
+    private final String SEARCHES_COLLECTION = "searches";
+    private final String FOUND_PRODUCTS_COLLECTION = "foundProducts";
     private FirebaseFirestore db;
 
     public ProductRepositoryImpl() {
@@ -35,9 +36,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void saveProduct(@NonNull Product product) {
-        db.collection(PRODUCTS_COLLECTION)
-                .add(product)
+    public void saveProduct(@NonNull SearchProduct searchProduct) {
+        db.collection(SEARCHES_COLLECTION)
+                .add(searchProduct)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -54,10 +55,10 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public void getProducts(String userId, Context context, final ListView mProductListView) {
-        final List<Product> mProductList = new ArrayList<>();
-        final ProductsAdapter mProductsAdapter = new ProductsAdapter(context, mProductList);
+        final List<SearchProduct> mSearchProductList = new ArrayList<>();
+        final SearchesAdapter mSearchesAdapter = new SearchesAdapter(context, mSearchProductList);
         FirebaseFirestore db = FirebaseFirestore.getInstance();  // TODO: check if it's necessary
-        db.collection("products")
+        db.collection(SEARCHES_COLLECTION)
                 .whereEqualTo("uid", userId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -66,10 +67,10 @@ public class ProductRepositoryImpl implements ProductRepository {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                Product product = document.toObject(Product.class);
-                                mProductList.add(product);
+                                SearchProduct searchProduct = document.toObject(SearchProduct.class);
+                                mSearchProductList.add(searchProduct);
                             }
-                            mProductListView.setAdapter(mProductsAdapter);
+                            mProductListView.setAdapter(mSearchesAdapter);
                         }
                         else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -83,7 +84,7 @@ public class ProductRepositoryImpl implements ProductRepository {
 
         final List<FoundProduct> mProductList = new ArrayList<>();
 
-        db.collection("foundProducts")
+        db.collection(FOUND_PRODUCTS_COLLECTION)
                 .whereEqualTo("searchPhrase", searchPhrase)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -94,7 +95,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 // TODO: change once database is correct
                                 mProductList.add(new FoundProduct("KUBEK", "link", "10", "allegro"));
-                                //Product product = document.toObject(Product.class);
+                                //SearchProduct product = document.toObject(SearchProduct.class);
                                 //mProductList.add(product);
                             }
                             //mProductListView.setAdapter(mProductsAdapter);

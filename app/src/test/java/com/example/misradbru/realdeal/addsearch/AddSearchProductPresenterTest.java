@@ -1,6 +1,6 @@
-package com.example.misradbru.realdeal.addproduct;
+package com.example.misradbru.realdeal.addsearch;
 
-import com.example.misradbru.realdeal.data.Product;
+import com.example.misradbru.realdeal.data.SearchProduct;
 import com.example.misradbru.realdeal.data.ProductRepository;
 
 import org.junit.Before;
@@ -11,15 +11,15 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
-public class AddProductPresenterTest {
+public class AddSearchProductPresenterTest {
 
     @Mock
     private ProductRepository productRepository;
 
     @Mock
-    private AddProductContract.View mAddProductView;
+    private AddSearchContract.View mAddProductView;
 
-    private AddProductPresenter mAddProductPresenter;
+    private AddSearchPresenter mAddSearchPresenter;
 
     @Before
     public void setupAddNotePresenter() {
@@ -28,13 +28,13 @@ public class AddProductPresenterTest {
         MockitoAnnotations.initMocks(this);
 
         // Get a reference to the class under test
-        mAddProductPresenter = new AddProductPresenter(mAddProductView, productRepository);
+        mAddSearchPresenter = new AddSearchPresenter(mAddProductView, productRepository);
     }
 
     @Test
     public void saveProduct_emptyFieldShowsErrorUi() {
         // When the presenter is asked to save an empty product
-        mAddProductPresenter.saveProduct("","", "", "", "UID");
+        mAddSearchPresenter.saveProduct("","", "", "", "UID");
 
         // Then an empty product message is displayed in the UI
         verify(mAddProductView).showEmptyProductError();
@@ -43,7 +43,7 @@ public class AddProductPresenterTest {
     @Test
     public void saveProduct_priceMismatchShowsErrorUi() {
         // When the presenter is asked to save an empty product
-        mAddProductPresenter.saveProduct("Bike","Bike Giant", "33", "10", "UID");
+        mAddSearchPresenter.saveProduct("Bike","Bike Giant", "33", "10", "UID");
 
         // Then an empty product message is displayed in the UI
         verify(mAddProductView).showMinMaxPriceMismatch();
@@ -52,10 +52,10 @@ public class AddProductPresenterTest {
     @Test
     public void saveNoteToRepository_showsSuccessMessageUi() {
         // When the presenter is asked to save a product
-        mAddProductPresenter.saveProduct("Bike", "Bike Giant", "20", "30", "UID");
+        mAddSearchPresenter.saveProduct("Bike", "Bike Giant", "20", "30", "UID");
 
         // Then a product is,
-        verify(productRepository).saveProduct(any(Product.class)); // saved to the model
+        verify(productRepository).saveProduct(any(SearchProduct.class)); // saved to the model
         verify(mAddProductView).showProductList(); // shown in the UI
     }
 }

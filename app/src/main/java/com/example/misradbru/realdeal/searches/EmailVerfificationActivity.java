@@ -1,4 +1,4 @@
-package com.example.misradbru.realdeal.products;
+package com.example.misradbru.realdeal.searches;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;

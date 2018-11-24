@@ -1,4 +1,4 @@
-package com.example.misradbru.realdeal.addproduct;
+package com.example.misradbru.realdeal.addsearch;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,12 +16,12 @@ import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddProductFragment#newInstance} factory method to
+ * Use the {@link AddSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddProductFragment extends Fragment implements AddProductContract.View {
+public class AddSearchFragment extends Fragment implements AddSearchContract.View {
 
-    private AddProductContract.UserActionsListener mActionListener;
+    private AddSearchContract.UserActionsListener mActionListener;
 
     private TextView ProductNameTextView;
     private TextView SearchPhraseTextView;
@@ -32,12 +32,12 @@ public class AddProductFragment extends Fragment implements AddProductContract.V
 
     private Button AddButton;
 
-    public AddProductFragment() {
+    public AddSearchFragment() {
         // Required empty public constructor
     }
 
-    public static AddProductFragment newInstance() {
-        return new AddProductFragment();
+    public static AddSearchFragment newInstance() {
+        return new AddSearchFragment();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class AddProductFragment extends Fragment implements AddProductContract.V
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_add_product, container, false);
+        View root = inflater.inflate(R.layout.fragment_add_search, container, false);
 
         ProductNameTextView = root.findViewById(R.id.productName);
         SearchPhraseTextView = root.findViewById(R.id.searchPhrase);
@@ -59,7 +59,7 @@ public class AddProductFragment extends Fragment implements AddProductContract.V
 
         AddButton = root.findViewById(R.id.addNewProductBtn);
 
-        mActionListener = new AddProductPresenter(this, new ProductRepositoryImpl());
+        mActionListener = new AddSearchPresenter(this, new ProductRepositoryImpl());
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {

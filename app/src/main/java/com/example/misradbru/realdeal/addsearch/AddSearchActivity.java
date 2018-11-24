@@ -1,4 +1,4 @@
-package com.example.misradbru.realdeal.addproduct;
+package com.example.misradbru.realdeal.addsearch;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,7 @@ import com.example.misradbru.realdeal.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AddProductActivity extends AppCompatActivity {
+public class AddSearchActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
@@ -19,7 +19,7 @@ public class AddProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_product);
+        setContentView(R.layout.activity_add_search);
 
         // Set up the toolbar.
         ActionBar actionBar = getSupportActionBar();
@@ -28,7 +28,7 @@ public class AddProductActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firebaseUser = mAuth.getCurrentUser();
 
-        initFragment(AddProductFragment.newInstance());
+        initFragment(AddSearchFragment.newInstance());
     }
 
     @Override
@@ -38,7 +38,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void initFragment(Fragment detailFragment) {
-        // Add the AddProductFragment to the layout
+        // Add the AddSearchFragment to the layout
         Bundle bundle = new Bundle();
         bundle.putString("UID", firebaseUser.getUid());
         detailFragment.setArguments(bundle);

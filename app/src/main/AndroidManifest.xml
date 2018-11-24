@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".products.MainActivity"
+            android:name=".searches.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -21,8 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".products.EmailVerfificationActivity" />
-        <activity android:name=".addproduct.AddProductActivity" />
+        <activity android:name=".searches.EmailVerfificationActivity" />
+        <activity android:name=".addsearch.AddSearchActivity" />
         <activity android:name=".foundproducts.FoundProductsActivity"/>
     </application>
 

@@ -1,17 +1,17 @@
-package com.example.misradbru.realdeal.addproduct;
+package com.example.misradbru.realdeal.addsearch;
 
 import android.support.annotation.NonNull;
 
-import com.example.misradbru.realdeal.data.Product;
+import com.example.misradbru.realdeal.data.SearchProduct;
 import com.example.misradbru.realdeal.data.ProductRepository;
 
-public class AddProductPresenter implements AddProductContract.UserActionsListener {
+public class AddSearchPresenter implements AddSearchContract.UserActionsListener {
 
-    private AddProductContract.View mAddProductView;
+    private AddSearchContract.View mAddProductView;
     private ProductRepository mProductRepository;
 
-    AddProductPresenter(@NonNull AddProductContract.View addProductView,
-                               @NonNull ProductRepository productRepository) {
+    AddSearchPresenter(@NonNull AddSearchContract.View addProductView,
+                       @NonNull ProductRepository productRepository) {
         mAddProductView = addProductView;
         mProductRepository = productRepository;
     }
@@ -25,8 +25,8 @@ public class AddProductPresenter implements AddProductContract.UserActionsListen
             Integer minPriceInt = Integer.valueOf(minPrice);
             Integer maxPriceInt = Integer.valueOf(maxPrice);
             if (minPriceInt < maxPriceInt) {
-                Product product = new Product(productName, searchPhrase, minPriceInt, maxPriceInt, uid);
-                mProductRepository.saveProduct(product);
+                SearchProduct searchProduct = new SearchProduct(productName, searchPhrase, minPriceInt, maxPriceInt, uid);
+                mProductRepository.saveProduct(searchProduct);
                 mAddProductView.showProductList();
             } else {
                 mAddProductView.showMinMaxPriceMismatch();

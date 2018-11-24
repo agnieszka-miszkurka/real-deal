@@ -1,15 +1,15 @@
 package com.example.misradbru.realdeal.data;
 
-public final class Product {
+public final class SearchProduct {
     private String name;
     private String searchPhrase;
     private Integer minPrice;
     private Integer maxPrice;
     private String uid;
 
-    public Product() {}
+    public SearchProduct() {}
 
-    public Product(String name, String searchPhrase, Integer minPrice, Integer maxPrice, String uid) {
+    public SearchProduct(String name, String searchPhrase, Integer minPrice, Integer maxPrice, String uid) {
         this.name = name;
         this.searchPhrase = searchPhrase;
         this.minPrice = minPrice;
