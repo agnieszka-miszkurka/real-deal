@@ -26,7 +26,6 @@
         </android.support.design.widget.AppBarLayout>
 
         <ListView
-            android:layout_marginTop="@dimen/normal_margin"
             android:id="@+id/products_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
