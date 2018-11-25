@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.misradbru.realdeal.R;
 import com.example.misradbru.realdeal.data.FoundProduct;
@@ -19,10 +18,8 @@ import java.util.ArrayList;
 
 public class FoundProductsFragment extends Fragment implements FoundProductsContract.View {
 
-    String mProductName;
     String mSearchPhrase;
     String mUid;
-    TextView mTitle;
     ProgressBar mProgressBar;
     ListView mFoundProductsList;
 
@@ -32,11 +29,10 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
         // Required empty public constructor
     }
 
-    public static Fragment newInstance(String productName, String searchPhrase, String uid) {
+    public static Fragment newInstance(String searchProductId, String uid) {
         FoundProductsFragment fragment = new FoundProductsFragment();
         Bundle args = new Bundle();
-        args.putString(FoundProductsActivity.PRODUCT_NAME, productName);
-        args.putString(FoundProductsActivity.SEARCH_PHRASE, searchPhrase);
+        args.putString(FoundProductsActivity.SEARCH_PRODUCT_ID, searchProductId);
         args.putString(FoundProductsActivity.UID, uid);
         fragment.setArguments(args);
         return fragment;
@@ -46,8 +42,7 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mProductName = getArguments().getString(FoundProductsActivity.PRODUCT_NAME);
-            mSearchPhrase = getArguments().getString(FoundProductsActivity.SEARCH_PHRASE);
+            mSearchPhrase = getArguments().getString(FoundProductsActivity.SEARCH_PRODUCT_ID);
             mUid = getArguments().getString(FoundProductsActivity.UID);
         }
 
@@ -66,9 +61,6 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mTitle = view.findViewById(R.id.product_name_tv);
-        mTitle.setText(mProductName);
 
         mProgressBar = view.findViewById(R.id.found_products_progressbar);
         mFoundProductsList = view.findViewById(R.id.found_products_listview);

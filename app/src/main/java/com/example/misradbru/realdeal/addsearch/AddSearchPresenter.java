@@ -1,9 +1,10 @@
 package com.example.misradbru.realdeal.addsearch;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import com.example.misradbru.realdeal.data.SearchProduct;
 import com.example.misradbru.realdeal.data.ProductRepository;
+import com.example.misradbru.realdeal.data.SearchProduct;
 
 public class AddSearchPresenter implements AddSearchContract.UserActionsListener {
 

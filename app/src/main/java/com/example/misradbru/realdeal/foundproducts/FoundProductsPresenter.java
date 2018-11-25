@@ -18,11 +18,11 @@ public class FoundProductsPresenter implements FoundProductsContract.UserActions
     }
 
     @Override
-    public void showFoundProducts(String searchPhrase, FoundProductsAdapter foundProductsAdapter) {
+    public void showFoundProducts(String searchProductId, FoundProductsAdapter foundProductsAdapter) {
 
         registerDataSetObserver(foundProductsAdapter);
         mFoundProductView.setProgressIndicator(true);
-        mProductRepository.getFoundProducts(searchPhrase, foundProductsAdapter);
+        mProductRepository.getFoundProducts(searchProductId, foundProductsAdapter);
     }
 
     private void registerDataSetObserver(FoundProductsAdapter foundProductsAdapter) {

@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".foundproducts.FoundProductsFragment">
 
-    <TextView
-        android:id="@+id/product_name_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/huge_margin"
-        android:fontFamily="sans-serif-condensed"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        tools:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
     <ProgressBar
         android:id="@+id/found_products_progressbar"
         style="?android:attr/progressBarStyle"

@@ -16,6 +16,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -65,6 +66,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 SearchProduct searchProduct = document.toObject(SearchProduct.class);
+                                searchProduct.setSearchProductId(document.getId());
                                 mSearchProductList.add(searchProduct);
                             }
                             mSearchesAdapter.addAll(mSearchProductList);
@@ -78,12 +80,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void getFoundProducts(String searchPhrase, final FoundProductsAdapter foundProductsAdapter) {
+    public void getFoundProducts(String searchProductId, final FoundProductsAdapter foundProductsAdapter) {
 
         final List<FoundProduct> mProductList = new ArrayList<>();
 
         db.collection(FOUND_PRODUCTS_COLLECTION)
-                .whereEqualTo("searchPhrase", searchPhrase)
+                .whereEqualTo("searchReference", searchProductId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -91,12 +93,15 @@ public class ProductRepositoryImpl implements ProductRepository {
                         if(task.isSuccessful()){
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                // TODO: change once database is correct
-                                mProductList.add(new FoundProduct("KUBEK", "link", "10", "allegro"));
-                                //SearchProduct product = document.toObject(SearchProduct.class);
-                                //mProductList.add(product);
+
+                                List allegroProducts = (ArrayList) document.getData().get("allegro");
+
+                                assert allegroProducts != null;
+                                for (Object product: allegroProducts) {
+                                    mProductList.add(createFoundProduct((HashMap)product, "allegro"));
+                                }
                             }
-                            //mProductListView.setAdapter(mProductsAdapter);
+
                             foundProductsAdapter.addAll(mProductList);
                             foundProductsAdapter.notifyDataSetChanged();
                         }
@@ -105,5 +110,14 @@ public class ProductRepositoryImpl implements ProductRepository {
                         }
                     }
                 });
+    }
+
+    FoundProduct createFoundProduct(HashMap foundProductMap, String provider) {
+        return new FoundProduct(
+                foundProductMap.get("name").toString(),
+                foundProductMap.get("link").toString(),
+                foundProductMap.get("price").toString(),
+                foundProductMap.get("currency").toString(),
+                provider);
     }
 }
