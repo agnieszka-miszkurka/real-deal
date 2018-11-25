@@ -94,21 +94,11 @@ public class ProductRepositoryImpl implements ProductRepository {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                                 Log.d(TAG, document.getId() + " => " + document.getData());
 
-                                if (document.getData().get("allegro") != null) {
-                                    List allegroProducts = (ArrayList) document.getData().get("allegro");
+                                List allegroProducts = (ArrayList) document.getData().get("allegro");
 
-                                    assert allegroProducts != null;
-                                    for (Object product: allegroProducts) {
-                                        HashMap foundProductMap = (HashMap) product;
-                                        FoundProduct foundProduct = new FoundProduct(
-                                                foundProductMap.get("name").toString(),
-                                                foundProductMap.get("link").toString(),
-                                                foundProductMap.get("price").toString(),
-                                                foundProductMap.get("currency").toString(),
-                                                "allegro");
-                                        System.out.println(foundProductMap);
-                                        mProductList.add(foundProduct);
-                                    }
+                                assert allegroProducts != null;
+                                for (Object product: allegroProducts) {
+                                    mProductList.add(createFoundProduct((HashMap)product, "allegro"));
                                 }
                             }
 
@@ -120,5 +110,14 @@ public class ProductRepositoryImpl implements ProductRepository {
                         }
                     }
                 });
+    }
+
+    FoundProduct createFoundProduct(HashMap foundProductMap, String provider) {
+        return new FoundProduct(
+                foundProductMap.get("name").toString(),
+                foundProductMap.get("link").toString(),
+                foundProductMap.get("price").toString(),
+                foundProductMap.get("currency").toString(),
+                provider);
     }
 }
