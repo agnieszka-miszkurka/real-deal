@@ -66,7 +66,7 @@ public class ProductRepositoryImpl implements ProductRepository {
                             for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                                 Log.d(TAG, document.getId() + " => " + document.getData());
                                 SearchProduct searchProduct = document.toObject(SearchProduct.class);
-                                searchProduct.setSearchProductId(document.getId());
+                                searchProduct.setSearchId(document.getId());
                                 mSearchProductList.add(searchProduct);
                             }
                             mSearchesAdapter.addAll(mSearchProductList);
@@ -80,12 +80,12 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void getFoundProducts(String searchProductId, final FoundProductsAdapter foundProductsAdapter) {
+    public void getFoundProducts(String searchId, final FoundProductsAdapter foundProductsAdapter) {
 
         final List<FoundProduct> mProductList = new ArrayList<>();
 
         db.collection(FOUND_PRODUCTS_COLLECTION)
-                .whereEqualTo("searchReference", searchProductId)
+                .whereEqualTo("searchReference", searchId)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

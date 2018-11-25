@@ -3,6 +3,7 @@ package com.example.misradbru.realdeal.foundproducts;
 import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
 
+import com.example.misradbru.realdeal.data.FoundProduct;
 import com.example.misradbru.realdeal.data.ProductRepository;
 
 public class FoundProductsPresenter implements FoundProductsContract.UserActionsListener {
@@ -18,11 +19,16 @@ public class FoundProductsPresenter implements FoundProductsContract.UserActions
     }
 
     @Override
-    public void showFoundProducts(String searchProductId, FoundProductsAdapter foundProductsAdapter) {
+    public void showFoundProducts(String searchId, FoundProductsAdapter foundProductsAdapter) {
 
         registerDataSetObserver(foundProductsAdapter);
         mFoundProductView.setProgressIndicator(true);
-        mProductRepository.getFoundProducts(searchProductId, foundProductsAdapter);
+        mProductRepository.getFoundProducts(searchId, foundProductsAdapter);
+    }
+
+    @Override
+    public void foundProductClicked(FoundProduct foundProduct) {
+        mFoundProductView.openFoundProductPage(foundProduct.getLink());
     }
 
     private void registerDataSetObserver(FoundProductsAdapter foundProductsAdapter) {

@@ -1,5 +1,7 @@
 package com.example.misradbru.realdeal.foundproducts;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -29,10 +32,10 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
         // Required empty public constructor
     }
 
-    public static Fragment newInstance(String searchProductId, String uid) {
+    public static Fragment newInstance(String searchId, String uid) {
         FoundProductsFragment fragment = new FoundProductsFragment();
         Bundle args = new Bundle();
-        args.putString(FoundProductsActivity.SEARCH_PRODUCT_ID, searchProductId);
+        args.putString(FoundProductsActivity.SEARCH_ID, searchId);
         args.putString(FoundProductsActivity.UID, uid);
         fragment.setArguments(args);
         return fragment;
@@ -42,7 +45,7 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mSearchPhrase = getArguments().getString(FoundProductsActivity.SEARCH_PRODUCT_ID);
+            mSearchPhrase = getArguments().getString(FoundProductsActivity.SEARCH_ID);
             mUid = getArguments().getString(FoundProductsActivity.UID);
         }
 
@@ -64,6 +67,13 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
 
         mProgressBar = view.findViewById(R.id.found_products_progressbar);
         mFoundProductsList = view.findViewById(R.id.found_products_listview);
+        mFoundProductsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                FoundProduct clickedFoundProduct = (FoundProduct) parent.getAdapter().getItem(position);
+                mActionsListener.foundProductClicked(clickedFoundProduct);
+            }
+        });
     }
 
     @Override
@@ -85,5 +95,11 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
             mProgressBar.setVisibility(View.GONE);
             mFoundProductsList.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void openFoundProductPage(String url) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent);
     }
 }

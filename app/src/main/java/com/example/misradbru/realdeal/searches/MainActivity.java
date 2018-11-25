@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
 
                 Intent intent = new Intent(getApplicationContext(), FoundProductsActivity.class);
                 intent.putExtra(FoundProductsActivity.PRODUCT_NAME, clickedSearchProduct.getName());
-                intent.putExtra(FoundProductsActivity.SEARCH_PRODUCT_ID, clickedSearchProduct.getSearchProductId());
+                intent.putExtra(FoundProductsActivity.SEARCH_ID, clickedSearchProduct.getSearchId());
                 intent.putExtra(FoundProductsActivity.UID, clickedSearchProduct.getUid());
                 startActivity(intent);
             }
