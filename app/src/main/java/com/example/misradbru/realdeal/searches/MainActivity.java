@@ -19,10 +19,16 @@ import com.example.misradbru.realdeal.R;
 import com.example.misradbru.realdeal.addsearch.AddSearchActivity;
 import com.example.misradbru.realdeal.data.ProductRepositoryImpl;
 import com.example.misradbru.realdeal.data.SearchProduct;
+import com.example.misradbru.realdeal.data.TokenRepository;
+import com.example.misradbru.realdeal.data.TokenRepositoryImpl;
 import com.example.misradbru.realdeal.foundproducts.FoundProductsActivity;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
                 FirebaseUser user = mAuth.getCurrentUser();
                 checkIfEmailVerified(user, "ON_ACTIVITY_RESULT");
 
+                assert user != null;
+                updateUidForToken(user.getUid());
+
             } else if (resultCode == RESULT_CANCELED) {
                 finish();
             }
@@ -133,13 +142,26 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         }
     }
 
-//    private void createProductsList() {
-//       ProductRepositoryImpl repository = new ProductRepositoryImpl();
-//        SearchesAdapter mSearchesAdapter =
-//                new SearchesAdapter(this.getApplicationContext(), new ArrayList<SearchProduct>());
-//        mProductListView.setAdapter(mSearchesAdapter);
-//       repository.getSearches(mAuth.getUid(),mSearchesAdapter);
-//    }
+    void updateUidForToken(final String uid) {
+
+        final TokenRepository tokenRepository = new TokenRepositoryImpl();
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        tokenRepository.updateUid(uid, token);
+                    }
+                });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
