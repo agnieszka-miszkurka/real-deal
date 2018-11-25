@@ -6,7 +6,7 @@ public final class SearchProduct {
     private Integer minPrice;
     private Integer maxPrice;
     private String uid;
-    private String searchProductId;
+    private String searchId;
 
     public SearchProduct() {}
 
@@ -38,11 +38,11 @@ public final class SearchProduct {
         return uid;
     }
 
-    public String getSearchProductId() {
-        return searchProductId;
+    public String getSearchId() {
+        return searchId;
     }
 
-    public void setSearchProductId(String id) {
-        this.searchProductId = id;
+    public void setSearchId(String id) {
+        this.searchId = id;
     }
 }

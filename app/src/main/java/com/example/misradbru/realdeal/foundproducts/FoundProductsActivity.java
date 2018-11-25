@@ -13,7 +13,7 @@ import java.util.Objects;
 public class FoundProductsActivity extends AppCompatActivity {
 
     public static final String PRODUCT_NAME = "PRODUCT_NAME";
-    public static final String SEARCH_PRODUCT_ID = "SEARCH_PRODUCT_ID";
+    public static final String SEARCH_ID = "SEARCH_ID";
     public static final String UID = "UID";
 
     @Override
@@ -22,12 +22,12 @@ public class FoundProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_found_products);
 
         String productName = getIntent().getStringExtra(PRODUCT_NAME);
-        String searchProductId = getIntent().getStringExtra(SEARCH_PRODUCT_ID);
+        String searchId = getIntent().getStringExtra(SEARCH_ID);
         String uid = getIntent().getStringExtra(UID);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle(productName);
 
-        initFragment(FoundProductsFragment.newInstance(searchProductId, uid));
+        initFragment(FoundProductsFragment.newInstance(searchId, uid));
 
     }
 
