@@ -6,14 +6,15 @@ public final class SearchProduct {
     private Integer minPrice;
     private Integer maxPrice;
     private String uid;
+    private String searchProductId;
 
     public SearchProduct() {}
 
-    public SearchProduct(String name, String searchPhrase, Integer minPrice, Integer maxPrice, String uid) {
-        this.name = name;
+    public SearchProduct(String productName, String searchPhrase, Integer minPriceInt, Integer maxPriceInt, String uid) {
+        this.name = productName;
         this.searchPhrase = searchPhrase;
-        this.minPrice = minPrice;
-        this.maxPrice = maxPrice;
+        this.minPrice = minPriceInt;
+        this.maxPrice = maxPriceInt;
         this.uid = uid;
     }
 
@@ -35,5 +36,13 @@ public final class SearchProduct {
 
     public String getUid() {
         return uid;
+    }
+
+    public String getSearchProductId() {
+        return searchProductId;
+    }
+
+    public void setSearchProductId(String id) {
+        this.searchProductId = id;
     }
 }

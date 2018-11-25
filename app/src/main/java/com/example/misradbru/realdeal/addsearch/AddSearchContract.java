@@ -16,6 +16,5 @@ public interface AddSearchContract {
 
         void saveProduct(String productName, String searchPhrase, String minPrice, String maxPrice,
                          String uid);
-
     }
 }

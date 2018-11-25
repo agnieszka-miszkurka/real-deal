@@ -6,13 +6,15 @@ public class FoundProduct {
     private String name;
     private String price;
     private String provider;
+    private String currency;
 
     FoundProduct() {}
 
-    FoundProduct(String name, String link, String price, String provider) {
+    FoundProduct(String name, String link, String price, String currency, String provider) {
         this.name = name;
         this.link = link;
         this.price = price;
+        this.currency = currency;
         this.provider = provider;
     }
 
@@ -46,5 +48,9 @@ public class FoundProduct {
 
     public void setProvider(String provider) {
         this.provider = provider;
+    }
+
+    public String getCurrency() {
+        return currency;
     }
 }

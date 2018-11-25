@@ -1,9 +1,10 @@
 package com.example.misradbru.realdeal.addsearch;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
-import com.example.misradbru.realdeal.data.SearchProduct;
 import com.example.misradbru.realdeal.data.ProductRepository;
+import com.example.misradbru.realdeal.data.SearchProduct;
 
 public class AddSearchPresenter implements AddSearchContract.UserActionsListener {
 
@@ -25,6 +26,7 @@ public class AddSearchPresenter implements AddSearchContract.UserActionsListener
             Integer minPriceInt = Integer.valueOf(minPrice);
             Integer maxPriceInt = Integer.valueOf(maxPrice);
             if (minPriceInt < maxPriceInt) {
+                Log.d("TOMEEEEK", productName);
                 SearchProduct searchProduct = new SearchProduct(productName, searchPhrase, minPriceInt, maxPriceInt, uid);
                 mProductRepository.saveSearchProduct(searchProduct);
                 mAddProductView.showProductList();
