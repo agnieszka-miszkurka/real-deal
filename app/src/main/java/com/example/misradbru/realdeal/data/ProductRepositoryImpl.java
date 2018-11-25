@@ -110,7 +110,6 @@ public class ProductRepositoryImpl implements ProductRepository {
                                         mProductList.add(foundProduct);
                                     }
                                 }
-                                // TODO: change once database is correct
                             }
 
                             foundProductsAdapter.addAll(mProductList);
