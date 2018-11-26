@@ -63,11 +63,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SearchProduct clickedSearchProduct = (SearchProduct) parent.getAdapter().getItem(position);
 
-                Intent intent = new Intent(getApplicationContext(), FoundProductsActivity.class);
-                intent.putExtra(FoundProductsActivity.PRODUCT_NAME, clickedSearchProduct.getName());
-                intent.putExtra(FoundProductsActivity.SEARCH_ID, clickedSearchProduct.getSearchId());
-                intent.putExtra(FoundProductsActivity.UID, clickedSearchProduct.getUid());
-                startActivity(intent);
+                mActionsListener.openFoundProducts(clickedSearchProduct);
             }
         });
 
@@ -105,8 +101,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent =  new Intent(getApplicationContext(), AddSearchActivity.class);
-                startActivity(intent);
+                mActionsListener.addNewSearch();
             }
         });
 
@@ -195,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         SearchesAdapter mSearchesAdapter =
                 new SearchesAdapter(this.getApplicationContext(), new ArrayList<SearchProduct>());
         mProductListView.setAdapter(mSearchesAdapter);
-        mActionsListener.showFoundProducts(mAuth.getUid(), mSearchesAdapter);
+        mActionsListener.loadSearchProducts(mAuth.getUid(), mSearchesAdapter);
         mAuth.addAuthStateListener(mAuthStateListener);
     }
 
@@ -214,5 +209,20 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
             mProgressBar.setVisibility(View.GONE);
             mProductListView.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void showAddSearch() {
+        Intent intent =  new Intent(getApplicationContext(), AddSearchActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showFoundProductsUi(SearchProduct searchProduct) {
+        Intent intent = new Intent(getApplicationContext(), FoundProductsActivity.class);
+        intent.putExtra(FoundProductsActivity.PRODUCT_NAME, searchProduct.getName());
+        intent.putExtra(FoundProductsActivity.SEARCH_ID, searchProduct.getSearchId());
+        intent.putExtra(FoundProductsActivity.UID, searchProduct.getUid());
+        startActivity(intent);
     }
 }

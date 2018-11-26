@@ -4,6 +4,7 @@ import android.database.DataSetObserver;
 import android.support.annotation.NonNull;
 
 import com.example.misradbru.realdeal.data.ProductRepository;
+import com.example.misradbru.realdeal.data.SearchProduct;
 
 public class SearchesPresenter implements SearchesContract.UserActionListener {
 
@@ -17,10 +18,20 @@ public class SearchesPresenter implements SearchesContract.UserActionListener {
 
     }
     @Override
-    public void showFoundProducts(String uid, SearchesAdapter searchesAdapter) {
+    public void loadSearchProducts(String uid, SearchesAdapter searchesAdapter) {
         registerDataSetObserver(searchesAdapter);
         mSearchesView.setProgressIndicator(true);
         mProductRepository.getSearches(uid, searchesAdapter);
+    }
+
+    @Override
+    public void openFoundProducts(SearchProduct searchProduct) {
+        mSearchesView.showFoundProductsUi(searchProduct);
+    }
+
+    @Override
+    public void addNewSearch() {
+        mSearchesView.showAddSearch();
     }
 
     private void registerDataSetObserver(SearchesAdapter foundProductsAdapter) {
