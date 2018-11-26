@@ -11,15 +11,23 @@ public class SearchesPresenter implements SearchesContract.UserActionListener {
     private ProductRepository mProductRepository;
     private SearchesContract.View mSearchesView;
 
+    DataSetObserver dataSetObserver;
+
     SearchesPresenter(@NonNull ProductRepository productRepository,
                            @NonNull SearchesContract.View searchesView) {
         mSearchesView = searchesView;
         mProductRepository = productRepository;
+        dataSetObserver = new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                mSearchesView.setProgressIndicator(false);
+            }
+        };
 
     }
     @Override
     public void loadSearchProducts(String uid, SearchesAdapter searchesAdapter) {
-        registerDataSetObserver(searchesAdapter);
+        searchesAdapter.registerDataSetObserver(dataSetObserver);
         mSearchesView.setProgressIndicator(true);
         mProductRepository.getSearches(uid, searchesAdapter);
     }
@@ -32,14 +40,5 @@ public class SearchesPresenter implements SearchesContract.UserActionListener {
     @Override
     public void addNewSearch() {
         mSearchesView.showAddSearch();
-    }
-
-    private void registerDataSetObserver(SearchesAdapter foundProductsAdapter) {
-        foundProductsAdapter.registerDataSetObserver(new DataSetObserver() {
-            @Override
-            public void onChanged() {
-                mSearchesView.setProgressIndicator(false);
-            }
-        });
     }
 }

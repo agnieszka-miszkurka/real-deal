@@ -1,6 +1,6 @@
 package com.example.misradbru.realdeal.data;
 
-public final class SearchProduct {
+public class SearchProduct {
     private String name;
     private String searchPhrase;
     private Integer minPrice;
