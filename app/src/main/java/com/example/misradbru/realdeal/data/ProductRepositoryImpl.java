@@ -112,12 +112,57 @@ public class ProductRepositoryImpl implements ProductRepository {
                 });
     }
 
-    FoundProduct createFoundProduct(HashMap foundProductMap, String provider) {
+    @Override
+    public void deleteSearch(final String searchId) {
+        db.collection(SEARCHES_COLLECTION).document(searchId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(SEARCHES_COLLECTION, "DocumentSnapshot successfully deleted!");
+                        db.collection(FOUND_PRODUCTS_COLLECTION)
+                                .whereEqualTo("searchReference", searchId)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
+                                                db.collection(FOUND_PRODUCTS_COLLECTION)
+                                                        .document(document.getId())
+                                                        .delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d(FOUND_PRODUCTS_COLLECTION, "DocumentSnapshot successfully deleted!");
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.w(FOUND_PRODUCTS_COLLECTION, "Error deleting document", e);
+                                                            }
+                                                        });
+                                            }
+                                        }
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(SEARCHES_COLLECTION, "Error deleting document", e);
+                    }
+                });
+    }
+
+    private FoundProduct createFoundProduct(HashMap foundProductMap, String provider) {
         return new FoundProduct(
-                foundProductMap.get("name").toString(),
-                foundProductMap.get("link").toString(),
-                foundProductMap.get("price").toString(),
-                foundProductMap.get("currency").toString(),
+                Objects.requireNonNull(foundProductMap.get("name")).toString(),
+                Objects.requireNonNull(foundProductMap.get("link")).toString(),
+                Objects.requireNonNull(foundProductMap.get("price")).toString(),
+                Objects.requireNonNull(foundProductMap.get("currency")).toString(),
                 provider);
     }
 }

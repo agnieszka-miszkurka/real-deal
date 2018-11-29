@@ -16,4 +16,5 @@
     <string name="add">ADD</string>
     <string name="shopping_bag">shopping bag</string>
     <string name="pricemismatch_addproduct_message">Min value must be less than max value</string>
+    <string name="delete_this_search">DELETE THIS SEARCH</string>
 </resources>

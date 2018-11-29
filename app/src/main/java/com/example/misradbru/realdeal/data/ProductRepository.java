@@ -15,4 +15,6 @@ public interface ProductRepository {
     void getSearches(String userId, SearchesAdapter mSearchesAdapter);
 
     void getFoundProducts(String searchPhrase, final FoundProductsAdapter foundProductsAdapter);
+
+    void deleteSearch(String searchId);
 }
