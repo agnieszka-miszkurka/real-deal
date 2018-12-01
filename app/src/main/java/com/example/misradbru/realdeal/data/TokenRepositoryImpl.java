@@ -29,8 +29,79 @@ public class TokenRepositoryImpl implements TokenRepository {
         db.setFirestoreSettings(settings);
     }
 
+    /**
+     * Check if given uid already exist in the database. If it does - update token for this user.
+     * Otherwise create new entry for this user and token.
+     * @param uid - user ID
+     * @param token - token for FCM
+     */
     @Override
-    public void addToken(String uid, String token) {
+    public void addTokenOnTokenChanged(final String uid, final String token) {
+
+        db.collection(TOKENS_COLLECTION)
+                .whereEqualTo("uid", uid)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.isEmpty()) {
+                            Log.d(TAG, "empty query snapshot");
+                            addNewUserAndToken(uid, token);
+                        } else {
+                            updateToken(uid, token);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+
+
+    }
+
+    @Override
+    public void updateUid(final String uid, String token) {
+        db.collection(TOKENS_COLLECTION)
+                .whereEqualTo("token", token)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
+                            db.collection(TOKENS_COLLECTION)
+                                    .document(document.getId())
+                                    .update("uid", uid);
+                            Log.d(TAG, "DocumentSnapshot updated: " + document.getId());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void updateToken(String uid, final String token) {
+
+        db.collection(TOKENS_COLLECTION)
+                .whereEqualTo("uid", uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
+                            db.collection(TOKENS_COLLECTION)
+                                    .document(document.getId())
+                                    .update("token", token);
+                            Log.d(TAG, "DocumentSnapshot updated: " + document.getId());
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void addNewUserAndToken(String uid, String token) {
+
         final UserToken userToken = new UserToken(uid, token);
 
         db.collection(TOKENS_COLLECTION)
@@ -45,25 +116,6 @@ public class TokenRepositoryImpl implements TokenRepository {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
-                    }
-                });
-    }
-
-    @Override
-    public void updateUid(final String uid, String token) {
-
-        db.collection(TOKENS_COLLECTION)
-                .whereEqualTo("token", token)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
-                            db.collection(TOKENS_COLLECTION)
-                                    .document(document.getId())
-                                    .update("uid", uid);
-                            Log.d(TAG, "DocumentSnapshot updated: " + document.getId());
-                        }
                     }
                 });
     }
