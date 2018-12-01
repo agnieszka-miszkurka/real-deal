@@ -41,7 +41,8 @@ public class FoundProductsPresenter implements FoundProductsContract.UserActions
     }
 
     @Override
-    public void deleteProduct() {
-
+    public void deleteProduct(String searchId) {
+        mProductRepository.deleteSearch(searchId);
+        mFoundProductView.showSearches();
     }
 }

@@ -3,4 +3,5 @@
     <dimen name="h1">30sp</dimen>
     <dimen name="normal_margin">8dp</dimen>
     <dimen name="huge_margin">16dp</dimen>
+    <dimen name="normal_padding">8dp</dimen>
 </resources>

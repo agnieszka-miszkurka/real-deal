@@ -10,6 +10,8 @@ public interface FoundProductsContract {
 
         void openFoundProductPage(String url);
 
+        void showSearches();
+
     }
 
     interface UserActionsListener {
@@ -18,6 +20,6 @@ public interface FoundProductsContract {
 
         void foundProductClicked(FoundProduct foundProduct);
 
-        void deleteProduct();
+        void deleteProduct(String searchId);
     }
 }

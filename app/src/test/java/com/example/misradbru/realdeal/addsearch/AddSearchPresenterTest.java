@@ -11,7 +11,7 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
-public class AddSearchProductPresenterTest {
+public class AddSearchPresenterTest {
 
     @Mock
     private ProductRepository productRepository;
@@ -23,8 +23,7 @@ public class AddSearchProductPresenterTest {
 
     @Before
     public void setupAddNotePresenter() {
-        // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
-        // inject the mocks in the test the initMocks method needs to be called.
+
         MockitoAnnotations.initMocks(this);
 
         // Get a reference to the class under test

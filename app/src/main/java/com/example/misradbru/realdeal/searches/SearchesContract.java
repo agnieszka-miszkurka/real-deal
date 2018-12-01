@@ -1,14 +1,24 @@
 package com.example.misradbru.realdeal.searches;
 
+import com.example.misradbru.realdeal.data.SearchProduct;
+
 public interface SearchesContract {
     interface View {
 
         void setProgressIndicator(boolean active);
 
+        void showAddSearch();
+
+        void showFoundProductsUi(SearchProduct searchProduct);
+
     }
 
     interface UserActionListener {
 
-        void showFoundProducts(String uid, SearchesAdapter searchesAdapter);
+        void loadSearchProducts(String uid, SearchesAdapter searchesAdapter);
+
+        void openFoundProducts(SearchProduct searchProduct);
+
+        void addNewSearch();
     }
 }
