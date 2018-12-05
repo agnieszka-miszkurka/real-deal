@@ -5,13 +5,20 @@ import com.example.misradbru.realdeal.data.ProductRepository;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
+@RunWith(JUnit4.class)
 public class AddSearchPresenterTest {
+
+    private static final String accents 	= "Ą,ą,Ć,ć,Ż,ż,Ł,ł,Ó,ó,Ę,ę,Ś,ś,Ź,ź,Ń,ń";
+    private static final String expected	= "A,a,C,c,Z,z,L,l,O,o,E,e,S,s,Z,z,N,n";
 
     @Mock
     private ProductRepository productRepository;
@@ -49,12 +56,17 @@ public class AddSearchPresenterTest {
     }
 
     @Test
-    public void saveNoteToRepository_showsSuccessMessageUi() {
+    public void saveProductToRepository_showsSuccessMessageUi() {
         // When the presenter is asked to save a product
         mAddSearchPresenter.saveProduct("Bike", "Bike Giant", "20", "30", "UID");
 
         // Then a product is,
         verify(productRepository).saveSearchProduct(any(SearchProduct.class)); // saved to the model
         verify(mAddProductView).showProductList(); // shown in the UI
+    }
+
+    @Test
+    public void unaccent_changesPolishLettersCorrectly() {
+        assertThat(mAddSearchPresenter.unaccent(accents)).isEqualTo(expected);
     }
 }

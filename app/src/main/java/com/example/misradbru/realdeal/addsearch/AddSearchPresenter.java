@@ -1,10 +1,11 @@
 package com.example.misradbru.realdeal.addsearch;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.example.misradbru.realdeal.data.ProductRepository;
 import com.example.misradbru.realdeal.data.SearchProduct;
+
+import java.text.Normalizer;
 
 public class AddSearchPresenter implements AddSearchContract.UserActionsListener {
 
@@ -26,12 +27,20 @@ public class AddSearchPresenter implements AddSearchContract.UserActionsListener
             Integer minPriceInt = Integer.valueOf(minPrice);
             Integer maxPriceInt = Integer.valueOf(maxPrice);
             if (minPriceInt < maxPriceInt) {
-                SearchProduct searchProduct = new SearchProduct(productName, searchPhrase, minPriceInt, maxPriceInt, uid);
+                SearchProduct searchProduct = new SearchProduct(productName, unaccent(searchPhrase), minPriceInt, maxPriceInt, uid);
                 mProductRepository.saveSearchProduct(searchProduct);
                 mAddProductView.showProductList();
             } else {
                 mAddProductView.showMinMaxPriceMismatch();
             }
         }
+    }
+
+    String unaccent(String src) {
+        src = src.replaceAll("ł", "l");
+        src = src.replaceAll("Ł", "L");
+        return Normalizer
+                .normalize(src, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
     }
 }
