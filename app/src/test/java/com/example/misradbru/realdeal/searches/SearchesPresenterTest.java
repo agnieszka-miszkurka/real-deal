@@ -7,11 +7,14 @@ import com.example.misradbru.realdeal.data.SearchProduct;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import static org.mockito.Mockito.verify;
 
-
+@RunWith(JUnit4.class)
 public class SearchesPresenterTest {
 
     private String USER_ID = "userID";
@@ -35,7 +38,7 @@ public class SearchesPresenterTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         mSearchesPresenter = new SearchesPresenter(mProductRepository, mSearchesView);

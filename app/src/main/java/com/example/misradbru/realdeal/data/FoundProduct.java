@@ -10,7 +10,7 @@ public class FoundProduct {
 
     FoundProduct() {}
 
-    FoundProduct(String name, String link, String price, String currency, String provider) {
+    public FoundProduct(String name, String link, String price, String currency, String provider) {
         this.name = name;
         this.link = link;
         this.price = price;

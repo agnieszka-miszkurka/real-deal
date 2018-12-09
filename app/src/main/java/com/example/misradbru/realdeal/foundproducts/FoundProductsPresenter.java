@@ -9,12 +9,19 @@ import com.example.misradbru.realdeal.data.ProductRepository;
 public class FoundProductsPresenter implements FoundProductsContract.UserActionsListener {
 
     private ProductRepository mProductRepository;
-    private FoundProductsContract.View mFoundProductView;
+    private FoundProductsContract.View mFoundProductsView;
+    DataSetObserver dataSetObserver;
 
     FoundProductsPresenter(@NonNull ProductRepository productRepository,
                                   @NonNull FoundProductsContract.View foundProductView) {
-        mFoundProductView = foundProductView;
+        mFoundProductsView = foundProductView;
         mProductRepository = productRepository;
+        dataSetObserver = new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                mFoundProductsView.setProgressIndicator(false);
+            }
+        };
 
     }
 
@@ -22,27 +29,22 @@ public class FoundProductsPresenter implements FoundProductsContract.UserActions
     public void showFoundProducts(String searchId, FoundProductsAdapter foundProductsAdapter) {
 
         registerDataSetObserver(foundProductsAdapter);
-        mFoundProductView.setProgressIndicator(true);
+        mFoundProductsView.setProgressIndicator(true);
         mProductRepository.getFoundProducts(searchId, foundProductsAdapter);
     }
 
     @Override
     public void foundProductClicked(FoundProduct foundProduct) {
-        mFoundProductView.openFoundProductPage(foundProduct.getLink());
+        mFoundProductsView.openFoundProductPage(foundProduct.getLink());
     }
 
     private void registerDataSetObserver(FoundProductsAdapter foundProductsAdapter) {
-        foundProductsAdapter.registerDataSetObserver(new DataSetObserver() {
-            @Override
-            public void onChanged() {
-                mFoundProductView.setProgressIndicator(false);
-            }
-        });
+        foundProductsAdapter.registerDataSetObserver(dataSetObserver);
     }
 
     @Override
     public void deleteProduct(String searchId) {
         mProductRepository.deleteSearch(searchId);
-        mFoundProductView.showSearches();
+        mFoundProductsView.showSearches();
     }
 }
