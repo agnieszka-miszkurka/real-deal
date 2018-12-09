@@ -21,7 +21,8 @@ public class FoundProductsAdapter  extends ArrayAdapter<FoundProduct> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         if(convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_foundproductitem, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_foundproductitem, parent, false);
+
         }
 
         TextView titleTextView = convertView.findViewById(R.id.found_product_name_tv);
