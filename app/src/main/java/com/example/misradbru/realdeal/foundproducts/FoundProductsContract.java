@@ -1,5 +1,9 @@
 package com.example.misradbru.realdeal.foundproducts;
 
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.example.misradbru.realdeal.data.FoundProduct;
 
 public interface FoundProductsContract {
@@ -11,6 +15,12 @@ public interface FoundProductsContract {
         void openFoundProductPage(String url);
 
         void showSearches();
+
+        ProgressBar getProgressBar();
+
+        Button getButton();
+
+        ListView getFoundProductsList();
 
     }
 

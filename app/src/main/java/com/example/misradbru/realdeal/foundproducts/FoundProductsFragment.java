@@ -25,11 +25,23 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
 
     String mSearchId;
     String mUid;
-    ProgressBar mProgressBar;
-    Button mButton;
-    ListView mFoundProductsList;
+    private ProgressBar mProgressBar;
+    private Button mButton;
+    private ListView mFoundProductsList;
 
     private FoundProductsContract.UserActionsListener mActionsListener;
+
+    public ProgressBar getProgressBar() {
+        return mProgressBar;
+    }
+
+    public Button getButton() {
+        return mButton;
+    }
+
+    public ListView getFoundProductsList() {
+        return mFoundProductsList;
+    }
 
     public FoundProductsFragment() {
         // Required empty public constructor
