@@ -8,13 +8,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.misradbru.realdeal.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class AddSearchActivity extends AppCompatActivity {
 
-    FirebaseAuth mAuth;
-    FirebaseUser firebaseUser;
+    String uid;
+    final static String UID = "UID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +23,7 @@ public class AddSearchActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle(R.string.add_product);
-        mAuth = FirebaseAuth.getInstance();
-        firebaseUser = mAuth.getCurrentUser();
+        uid = getIntent().getStringExtra(UID);
 
         initFragment(AddSearchFragment.newInstance());
     }
@@ -37,10 +34,15 @@ public class AddSearchActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
     private void initFragment(Fragment detailFragment) {
         // Add the AddSearchFragment to the layout
         Bundle bundle = new Bundle();
-        bundle.putString("UID", firebaseUser.getUid());
+        bundle.putString(UID, uid);
         detailFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
