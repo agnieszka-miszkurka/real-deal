@@ -19,11 +19,13 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AddSearchActivityTest {
@@ -50,7 +52,9 @@ public class AddSearchActivityTest {
 
     @Test
     public void addSearch_DisplayedInUi() {
-        onView(withId(R.id.basket_imageview)).check(matches(allOf(
+        onView(withId(R.id.basket_imageview))
+                .inRoot(withDecorView((is(mAddSearchActivity.getWindow().getDecorView()))))
+                .check(matches(allOf(
                 isDisplayed()
         )));
     }
