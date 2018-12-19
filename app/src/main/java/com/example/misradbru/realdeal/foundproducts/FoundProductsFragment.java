@@ -27,21 +27,9 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
     String mUid;
     private ProgressBar mProgressBar;
     private Button mButton;
-    private ListView mFoundProductsList;
+    ListView mFoundProductsList;
 
-    private FoundProductsContract.UserActionsListener mActionsListener;
-
-    public ProgressBar getProgressBar() {
-        return mProgressBar;
-    }
-
-    public Button getButton() {
-        return mButton;
-    }
-
-    public ListView getFoundProductsList() {
-        return mFoundProductsList;
-    }
+    public FoundProductsContract.UserActionsListener mActionsListener;
 
     public FoundProductsFragment() {
         // Required empty public constructor
@@ -107,7 +95,6 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
                 new FoundProductsAdapter(getContext(), new ArrayList<FoundProduct>());
         mFoundProductsList.setAdapter(foundProductsAdapter);
         mActionsListener.showFoundProducts(mSearchId, foundProductsAdapter);
-
     }
 
     @Override
