@@ -62,4 +62,10 @@ public class FoundProductsPresenterTest {
         verify(mProductRepository).deleteSearch(SEARCH_ID);
         verify(mFoundProductsView).showSearches();
     }
+
+    @Test
+    public void dataSetObserverOnChange() {
+        mFoundProductsPresenter.dataSetObserver.onChanged();
+        verify(mFoundProductsView).setProgressIndicator(false);
+    }
 }
