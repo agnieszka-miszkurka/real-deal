@@ -12,7 +12,7 @@ import com.example.misradbru.realdeal.R;
 public class AddSearchActivity extends AppCompatActivity {
 
     String uid;
-    public final static String UID_STRING = "UID_STRING";
+    public static final String UID_STRING = "UID_STRING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
