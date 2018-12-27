@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ProductRepositoryImpl implements ProductRepository {
-    private final String TAG = "ProductRepositoryImpl";
-    private final String SEARCHES_COLLECTION = "searches";
-    private final String FOUND_PRODUCTS_COLLECTION = "foundProducts";
+    private static final String TAG = "ProductRepositoryImpl";
+    private static final String SEARCHES_COLLECTION = "searches";
+    private static final String FOUND_PRODUCTS_COLLECTION = "foundProducts";
     private FirebaseFirestore db;
 
     public ProductRepositoryImpl() {
