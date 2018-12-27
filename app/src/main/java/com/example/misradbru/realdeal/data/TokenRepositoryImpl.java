@@ -18,8 +18,8 @@ import java.util.Objects;
 public class TokenRepositoryImpl implements TokenRepository {
 
     private FirebaseFirestore db;
-    private final String TOKENS_COLLECTION = "tokens";
-    private final String TAG = "TokenRepository";
+    private static final String TOKENS_COLLECTION = "tokens";
+    private static final String TAG = "TokenRepository";
 
     public TokenRepositoryImpl() {
         db = FirebaseFirestore.getInstance();
