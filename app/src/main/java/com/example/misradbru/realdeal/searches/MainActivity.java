@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
                 if (user != null) {
                     checkIfEmailVerified(user, "ON_CREATE");
                     onSignedInInitialize(user.getDisplayName());
-                    //createProductsList();
                 } else {
                     onSignedOutCleanUp();
                     startActivityForResult(
