@@ -63,7 +63,7 @@ public class AddSearchFragment extends Fragment implements AddSearchContract.Vie
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            userID = bundle.getString("UID", "0");
+            userID = bundle.getString("UID_STRING", "0");
         }
 
         AddButton.setOnClickListener(new View.OnClickListener() {

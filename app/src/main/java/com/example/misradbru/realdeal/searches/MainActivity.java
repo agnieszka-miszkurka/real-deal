@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
     @Override
     public void showAddSearch() {
         Intent intent =  new Intent(getApplicationContext(), AddSearchActivity.class);
-        intent.putExtra(FoundProductsActivity.UID, mAuth.getUid());
+        intent.putExtra(AddSearchActivity.UID_STRING, mAuth.getUid());
         startActivity(intent);
     }
 

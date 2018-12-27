@@ -42,7 +42,7 @@ public class AddSearchActivityTest {
         MockitoAnnotations.initMocks(this);
 
         Intent startIntent = new Intent();
-        startIntent.putExtra(AddSearchActivity.UID, UID1);
+        startIntent.putExtra(AddSearchActivity.UID_STRING, UID1);
         mActivityRule.launchActivity(startIntent);
 
         mAddSearchActivity = mActivityRule.getActivity();
