@@ -55,7 +55,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void getSearches(String userId, final SearchesAdapter mSearchesAdapter) {
         final List<SearchProduct> mSearchProductList = new ArrayList<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();  // TODO: check if it's necessary
+
         db.collection(SEARCHES_COLLECTION)
                 .whereEqualTo("uid", userId)
                 .get()
