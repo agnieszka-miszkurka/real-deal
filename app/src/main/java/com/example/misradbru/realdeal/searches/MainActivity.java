@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
     private SearchesContract.UserActionListener mActionsListener;
     private ProgressBar mProgressBar;
 
-    private String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
     private ListView mProductListView;
 
@@ -166,12 +166,11 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-                AuthUI.getInstance().signOut(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() ==  R.id.sign_out_menu) {
+            AuthUI.getInstance().signOut(this);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
