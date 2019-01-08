@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ProductRepositoryImpl implements ProductRepository {
-    private final String TAG = "ProductRepositoryImpl";
-    private final String SEARCHES_COLLECTION = "searches";
-    private final String FOUND_PRODUCTS_COLLECTION = "foundProducts";
+    private static final String TAG = "ProductRepositoryImpl";
+    private static final String SEARCHES_COLLECTION = "searches";
+    private static final String FOUND_PRODUCTS_COLLECTION = "foundProducts";
     private FirebaseFirestore db;
 
     public ProductRepositoryImpl() {
@@ -55,7 +55,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void getSearches(String userId, final SearchesAdapter mSearchesAdapter) {
         final List<SearchProduct> mSearchProductList = new ArrayList<>();
-        FirebaseFirestore db = FirebaseFirestore.getInstance();  // TODO: check if it's necessary
+
         db.collection(SEARCHES_COLLECTION)
                 .whereEqualTo("uid", userId)
                 .get()

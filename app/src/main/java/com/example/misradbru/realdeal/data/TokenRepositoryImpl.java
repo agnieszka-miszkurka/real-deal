@@ -18,8 +18,9 @@ import java.util.Objects;
 public class TokenRepositoryImpl implements TokenRepository {
 
     private FirebaseFirestore db;
-    private final String TOKENS_COLLECTION = "tokens";
-    private final String TAG = "TokenRepository";
+    private static final String TOKENS_COLLECTION = "tokens";
+    private static final String TOKEN = "token";
+    private static final String TAG = "TokenRepository";
 
     public TokenRepositoryImpl() {
         db = FirebaseFirestore.getInstance();
@@ -36,7 +37,7 @@ public class TokenRepositoryImpl implements TokenRepository {
      * @param token - token for FCM
      */
     @Override
-    public void addTokenOnTokenChanged(final String uid, final String token) {
+    public void addTokenToDatabase(final String uid, final String token) {
 
         db.collection(TOKENS_COLLECTION)
                 .whereEqualTo("uid", uid)
@@ -45,7 +46,7 @@ public class TokenRepositoryImpl implements TokenRepository {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.isEmpty()) {
-                            Log.d(TAG, "empty query snapshot");
+                            Log.d(TAG, "User does not have token");
                             addNewUserAndToken(uid, token);
                         } else {
                             updateToken(uid, token);
@@ -65,7 +66,7 @@ public class TokenRepositoryImpl implements TokenRepository {
     @Override
     public void updateUid(final String uid, String token) {
         db.collection(TOKENS_COLLECTION)
-                .whereEqualTo("token", token)
+                .whereEqualTo(TOKEN, token)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -92,7 +93,7 @@ public class TokenRepositoryImpl implements TokenRepository {
                         for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
                             db.collection(TOKENS_COLLECTION)
                                     .document(document.getId())
-                                    .update("token", token);
+                                    .update(TOKEN, token);
                             Log.d(TAG, "DocumentSnapshot updated: " + document.getId());
                         }
                     }
@@ -116,6 +117,26 @@ public class TokenRepositoryImpl implements TokenRepository {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
+
+    @Override
+    public void deleteTokenForDevice(String uid, final String token) {
+        db.collection(TOKENS_COLLECTION)
+                .whereEqualTo("uid", uid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        for(QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())){
+                            if (document.getData().get(TOKEN).equals(token)) {
+                                db.collection(TOKENS_COLLECTION)
+                                        .document(document.getId())
+                                        .delete();
+                                Log.d(TAG, "DocumentSnapshot deleted: " + document.getId());
+                            }
+                        }
                     }
                 });
     }

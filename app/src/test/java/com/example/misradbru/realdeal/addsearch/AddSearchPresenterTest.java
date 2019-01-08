@@ -40,7 +40,7 @@ public class AddSearchPresenterTest {
     @Test
     public void saveProduct_emptyFieldShowsErrorUi() {
         // When the presenter is asked to save an empty product
-        mAddSearchPresenter.saveProduct("","", "", "", "UID");
+        mAddSearchPresenter.saveProduct("","", "", "", "UID_STRING");
 
         // Then an empty product message is displayed in the UI
         verify(mAddProductView).showEmptyProductError();
@@ -49,7 +49,7 @@ public class AddSearchPresenterTest {
     @Test
     public void saveProduct_priceMismatchShowsErrorUi() {
         // When the presenter is asked to save an empty product
-        mAddSearchPresenter.saveProduct("Bike","Bike Giant", "33", "10", "UID");
+        mAddSearchPresenter.saveProduct("Bike","Bike Giant", "33", "10", "UID_STRING");
 
         // Then an empty product message is displayed in the UI
         verify(mAddProductView).showMinMaxPriceMismatch();
@@ -58,7 +58,7 @@ public class AddSearchPresenterTest {
     @Test
     public void saveProductToRepository_showsSuccessMessageUi() {
         // When the presenter is asked to save a product
-        mAddSearchPresenter.saveProduct("Bike", "Bike Giant", "20", "30", "UID");
+        mAddSearchPresenter.saveProduct("Bike", "Bike Giant", "20", "30", "UID_STRING");
 
         // Then a product is,
         verify(productRepository).saveSearchProduct(any(SearchProduct.class)); // saved to the model

@@ -12,7 +12,7 @@ import com.example.misradbru.realdeal.R;
 public class AddSearchActivity extends AppCompatActivity {
 
     String uid;
-    final static String UID = "UID";
+    public static final String UID_STRING = "UID_STRING";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class AddSearchActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setTitle(R.string.add_product);
-        uid = getIntent().getStringExtra(UID);
+        uid = getIntent().getStringExtra(UID_STRING);
 
         initFragment(AddSearchFragment.newInstance());
     }
@@ -42,7 +42,7 @@ public class AddSearchActivity extends AppCompatActivity {
     private void initFragment(Fragment detailFragment) {
         // Add the AddSearchFragment to the layout
         Bundle bundle = new Bundle();
-        bundle.putString(UID, uid);
+        bundle.putString(UID_STRING, uid);
         detailFragment.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

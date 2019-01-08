@@ -42,8 +42,9 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private SearchesContract.UserActionListener mActionsListener;
     private ProgressBar mProgressBar;
+    private TokenRepository tokenRepository;
 
-    private String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
     private ListView mProductListView;
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
                 mActionsListener.openFoundProducts(clickedSearchProduct);
             }
         });
-
+        tokenRepository = new TokenRepositoryImpl();
         authenticate();
     }
 
@@ -81,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
                 if (user != null) {
                     checkIfEmailVerified(user, "ON_CREATE");
                     onSignedInInitialize(user.getDisplayName());
-                    //createProductsList();
                 } else {
                     onSignedOutCleanUp();
                     startActivityForResult(
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
                 assert user != null;
                 updateUidForToken(user.getUid());
 
+
             } else if (resultCode == RESULT_CANCELED) {
                 finish();
             }
@@ -137,10 +138,12 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         }
     }
 
+    /**
+     * Calls function in TokenRepository to update record for a user
+     * or add new record
+     * @param uid - user id
+     */
     void updateUidForToken(final String uid) {
-
-        final TokenRepository tokenRepository = new TokenRepositoryImpl();
-
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
                     @Override
@@ -153,7 +156,30 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
 
-                        tokenRepository.updateUid(uid, token);
+                        tokenRepository.addTokenToDatabase(uid, token);
+                    }
+                });
+    }
+
+
+    /**
+     * Calls function in TokenRepository to delete record for current token
+     * @param uid - user id
+     */
+    void deleteToken(final String uid) {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        tokenRepository.deleteTokenForDevice(uid, token);
                     }
                 });
     }
@@ -167,12 +193,12 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sign_out_menu:
-                AuthUI.getInstance().signOut(this);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() ==  R.id.sign_out_menu) {
+            deleteToken(mAuth.getUid());
+            AuthUI.getInstance().signOut(this);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -214,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
     @Override
     public void showAddSearch() {
         Intent intent =  new Intent(getApplicationContext(), AddSearchActivity.class);
-        intent.putExtra(FoundProductsActivity.UID, mAuth.getUid());
+        intent.putExtra(AddSearchActivity.UID_STRING, mAuth.getUid());
         startActivity(intent);
     }
 

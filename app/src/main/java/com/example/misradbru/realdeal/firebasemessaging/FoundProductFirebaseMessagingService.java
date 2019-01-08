@@ -25,6 +25,6 @@ public class FoundProductFirebaseMessagingService extends FirebaseMessagingServi
 
     private void sendRegistrationToServer(String token) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        tokenRepository.addTokenOnTokenChanged(firebaseAuth.getUid(), token);
+        tokenRepository.addTokenToDatabase(firebaseAuth.getUid(), token);
     }
 }

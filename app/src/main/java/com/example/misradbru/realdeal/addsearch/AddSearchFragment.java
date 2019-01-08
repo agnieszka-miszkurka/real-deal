@@ -23,14 +23,12 @@ public class AddSearchFragment extends Fragment implements AddSearchContract.Vie
 
     private AddSearchContract.UserActionsListener mActionListener;
 
-    private TextView ProductNameTextView;
-    private TextView SearchPhraseTextView;
-    private TextView MinPriceTextView;
-    private TextView MaxPriceTextView;
+    private TextView mProductNameTextView;
+    private TextView mSearchPhraseTextView;
+    private TextView mMinPriceTextView;
+    private TextView mMaxPriceTextView;
 
     private String userID;
-
-    private Button AddButton;
 
     public AddSearchFragment() {
         // Required empty public constructor
@@ -41,39 +39,33 @@ public class AddSearchFragment extends Fragment implements AddSearchContract.Vie
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_search, container, false);
 
-        ProductNameTextView = root.findViewById(R.id.productName);
-        SearchPhraseTextView = root.findViewById(R.id.searchPhrase);
-        MinPriceTextView = root.findViewById(R.id.minPrice);
-        MaxPriceTextView = root.findViewById(R.id.maxPrice);
+        mProductNameTextView = root.findViewById(R.id.productName);
+        mSearchPhraseTextView = root.findViewById(R.id.searchPhrase);
+        mMinPriceTextView = root.findViewById(R.id.minPrice);
+        mMaxPriceTextView = root.findViewById(R.id.maxPrice);
 
-        AddButton = root.findViewById(R.id.addNewProductBtn);
+        Button addButton = root.findViewById(R.id.addNewProductBtn);
 
         mActionListener = new AddSearchPresenter(this, new ProductRepositoryImpl());
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            userID = bundle.getString("UID", "0");
+            userID = bundle.getString("UID_STRING", "0");
         }
 
-        AddButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActionListener.saveProduct(
-                        ProductNameTextView.getText().toString(),
-                        SearchPhraseTextView.getText().toString(),
-                        MinPriceTextView.getText().toString(),
-                        MaxPriceTextView.getText().toString(),
+                        mProductNameTextView.getText().toString(),
+                        mSearchPhraseTextView.getText().toString(),
+                        mMinPriceTextView.getText().toString(),
+                        mMaxPriceTextView.getText().toString(),
                         userID
                 );
             }
@@ -85,14 +77,14 @@ public class AddSearchFragment extends Fragment implements AddSearchContract.Vie
 
     @Override
     public void showEmptyProductError() {
-        Snackbar.make(ProductNameTextView,
+        Snackbar.make(mProductNameTextView,
                 getString(R.string.empty_addproduct_message), Snackbar.LENGTH_LONG).show();
 
     }
 
     @Override
     public void showMinMaxPriceMismatch() {
-        Snackbar.make(MinPriceTextView,
+        Snackbar.make(mMinPriceTextView,
                 getString(R.string.pricemismatch_addproduct_message), Snackbar.LENGTH_LONG).show();
 
     }
