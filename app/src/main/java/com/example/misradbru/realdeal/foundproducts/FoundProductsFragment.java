@@ -29,7 +29,7 @@ public class FoundProductsFragment extends Fragment implements FoundProductsCont
     private Button mButton;
     ListView mFoundProductsList;
 
-    private FoundProductsContract.UserActionsListener mActionsListener;
+    FoundProductsContract.UserActionsListener mActionsListener;
 
     public FoundProductsFragment() {
         // Required empty public constructor
