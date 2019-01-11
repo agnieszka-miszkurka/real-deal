@@ -71,6 +71,11 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         authenticate();
     }
 
+    /**
+     * Checks if user is currently logged in.
+     * In that case calls checking email verification and onSignedInInitialize
+     * otherwise redirects to sign in page.
+     */
     private void authenticate() {
         mAuth = FirebaseAuth.getInstance();
 
@@ -106,6 +111,14 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         });
 
     }
+
+    /**
+     * Check if request code was RC_SIGN_IN.
+     * If true, check the result. If email is verified update FCM token for the user.
+     * @param requestCode - code of the activity
+     * @param resultCode - result of the activity
+     * @param data - additional data for the activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -119,13 +132,18 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
                 assert user != null;
                 updateUidForToken(user.getUid());
 
-
             } else if (resultCode == RESULT_CANCELED) {
                 finish();
             }
         }
     }
 
+    /**
+     * Check if email of the user is verified.
+     * If it is not - redirects to EmailVerificationActivity page
+     * @param user - current user
+     * @param context - indicates from where was this function called
+     */
     void checkIfEmailVerified(FirebaseUser user, String context) {
         if (user.isEmailVerified()) {
             Log.d(context, "Email verified");
@@ -202,10 +220,17 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         }
     }
 
+    /**
+     * Changes username to ANONYMOUS when user is signed out
+     */
     void onSignedOutCleanUp() {
         mUsername = ANONYMOUS;
     }
 
+    /**
+     * Sets username to current user
+     * @param username - current username
+     */
     void onSignedInInitialize(String username) {
         mUsername = username;
     }
@@ -226,6 +251,10 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         mAuth.removeAuthStateListener(mAuthStateListener);
     }
 
+    /**
+     * Sets progress bar to visible and products list to invisible when list is not yet loaded
+     * @param active - true if progress bar should be active
+     */
     @Override
     public void setProgressIndicator(boolean active) {
         if (active) {
@@ -237,6 +266,9 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         }
     }
 
+    /**
+     * Starts AddSearchActivity
+     */
     @Override
     public void showAddSearch() {
         Intent intent =  new Intent(getApplicationContext(), AddSearchActivity.class);
@@ -244,6 +276,10 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         startActivity(intent);
     }
 
+    /**
+     * Starts FoundProductsActivity and passes searchProduct details
+     * @param searchProduct - product for which found products will be displayed
+     */
     @Override
     public void showFoundProductsUi(SearchProduct searchProduct) {
         Intent intent = new Intent(getApplicationContext(), FoundProductsActivity.class);
