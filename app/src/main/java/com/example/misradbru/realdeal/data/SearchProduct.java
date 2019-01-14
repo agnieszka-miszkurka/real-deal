@@ -1,5 +1,8 @@
 package com.example.misradbru.realdeal.data;
 
+/**
+ * Class that represents user's search
+ */
 public class SearchProduct {
     private String name;
     private String searchPhrase;

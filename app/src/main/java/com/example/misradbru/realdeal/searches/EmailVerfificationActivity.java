@@ -81,6 +81,9 @@ public class EmailVerfificationActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * If a user decides to bo back when his email is not yet verified, sign him out.
+     */
     @Override
     public void onBackPressed() {
         AuthUI.getInstance().signOut(this);

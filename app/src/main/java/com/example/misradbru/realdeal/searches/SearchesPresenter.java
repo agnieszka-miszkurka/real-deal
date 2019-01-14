@@ -23,8 +23,14 @@ public class SearchesPresenter implements SearchesContract.UserActionListener {
                 mSearchesView.setProgressIndicator(false);
             }
         };
-
     }
+
+    /**
+     * Calls repository function to get searches for user.
+     * Before searches are fetched, progress indicator will be active.
+     * @param uid - user id
+     * @param searchesAdapter - adapter for searches list
+     */
     @Override
     public void loadSearchProducts(String uid, SearchesAdapter searchesAdapter) {
         searchesAdapter.registerDataSetObserver(dataSetObserver);
@@ -32,11 +38,19 @@ public class SearchesPresenter implements SearchesContract.UserActionListener {
         mProductRepository.getSearches(uid, searchesAdapter);
     }
 
+    /**
+     * Calls View function to show found products for chosen search.
+     *
+     * @param searchProduct - search chosen by the user (clicked)
+     */
     @Override
     public void openFoundProducts(SearchProduct searchProduct) {
         mSearchesView.showFoundProductsUi(searchProduct);
     }
 
+    /**
+     * Calls View function to add new search.
+     */
     @Override
     public void addNewSearch() {
         mSearchesView.showAddSearch();
