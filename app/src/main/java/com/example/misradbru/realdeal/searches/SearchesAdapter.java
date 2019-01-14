@@ -13,6 +13,9 @@ import com.example.misradbru.realdeal.data.SearchProduct;
 
 import java.util.List;
 
+/**
+ * Adapter for ListView containing current user searches
+ */
 public class SearchesAdapter extends ArrayAdapter<SearchProduct> {
 
     public SearchesAdapter(Context context, List<SearchProduct> objects) {

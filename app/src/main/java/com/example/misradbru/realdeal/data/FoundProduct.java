@@ -1,5 +1,8 @@
 package com.example.misradbru.realdeal.data;
 
+/**
+ * Class that represents one found product for a specific user search
+ */
 public class FoundProduct {
 
     private String link;

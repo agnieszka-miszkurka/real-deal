@@ -1,5 +1,8 @@
 package com.example.misradbru.realdeal.data;
 
+/**
+ * Class that represents FCM token for a user
+ */
 public class UserToken {
     private String uid;
     private String token;

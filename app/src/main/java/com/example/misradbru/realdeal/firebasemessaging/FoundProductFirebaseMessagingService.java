@@ -23,6 +23,11 @@ public class FoundProductFirebaseMessagingService extends FirebaseMessagingServi
         sendRegistrationToServer(token);
     }
 
+    /**
+     * Calls repository function to add current user's token to a database.
+     *
+     * @param token - current users's token
+     */
     private void sendRegistrationToServer(String token) {
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         tokenRepository.addTokenToDatabase(firebaseAuth.getUid(), token);
