@@ -11,6 +11,8 @@ public class AddSearchPresenter implements AddSearchContract.UserActionsListener
 
     private AddSearchContract.View mAddProductView;
     private ProductRepository mProductRepository;
+    private String lowercasePolishL = "ł";
+    private String upppercasePolishL = "Ł";
 
     AddSearchPresenter(@NonNull AddSearchContract.View addProductView,
                        @NonNull ProductRepository productRepository) {
@@ -37,8 +39,8 @@ public class AddSearchPresenter implements AddSearchContract.UserActionsListener
     }
 
     String unaccent(String src) {
-        src = src.replaceAll("ł", "l");
-        src = src.replaceAll("Ł", "L");
+        src = src.replaceAll(lowercasePolishL, "l");
+        src = src.replaceAll(upppercasePolishL, "L");
         return Normalizer
                 .normalize(src, Normalizer.Form.NFD)
                 .replaceAll("[^\\p{ASCII}]", "");

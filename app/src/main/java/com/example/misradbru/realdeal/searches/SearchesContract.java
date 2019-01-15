@@ -7,6 +7,8 @@ public interface SearchesContract {
 
         void setProgressIndicator(boolean active);
 
+        void showNoSearchesMessage(boolean show);
+
         void showAddSearch();
 
         void showFoundProductsUi(SearchProduct searchProduct);
