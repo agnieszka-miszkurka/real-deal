@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         if (active) {
             mProgressBar.setVisibility(View.VISIBLE);
             mProductListView.setVisibility(View.GONE);
+            showNoSearchesMessage(false);
         } else {
             mProgressBar.setVisibility(View.GONE);
             if (mSearchesAdapter.getCount() == 0) {
