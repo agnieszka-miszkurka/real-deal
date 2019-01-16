@@ -57,7 +57,7 @@ public class AddSearchActivityTest {
 
     @Test
     public void errorShownOnEmptyMessage() {
-        onView(withId(R.id.addNewProductBtn)).perform(click());
+        // onView(withId(R.id.addNewProductBtn)).perform(click());
         // Add note title and description
         onView(withId(R.id.productName)).perform(typeText(""));
         onView(withId(R.id.searchPhrase)).perform(typeText(""),
