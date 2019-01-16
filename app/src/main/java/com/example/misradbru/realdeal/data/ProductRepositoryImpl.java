@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * class communicating with cloud firestore
+ */
 public class ProductRepositoryImpl implements ProductRepository {
     private static final String TAG = "ProductRepositoryImpl";
     private static final String SEARCHES_COLLECTION = "searches";
@@ -98,6 +101,12 @@ public class ProductRepositoryImpl implements ProductRepository {
 
                                 for (Object product: allegroProducts) {
                                     mProductList.add(createFoundProduct((HashMap)product, "allegro"));
+                                }
+
+                                List ebayProducts = (ArrayList) document.getData().get("ebay");
+
+                                for (Object product: ebayProducts) {
+                                    mProductList.add(createFoundProduct((HashMap)product, "ebay"));
                                 }
                             }
 
