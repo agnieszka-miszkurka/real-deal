@@ -96,7 +96,6 @@ public class ProductRepositoryImpl implements ProductRepository {
 
                                 List allegroProducts = (ArrayList) document.getData().get("allegro");
 
-                                assert allegroProducts != null;
                                 for (Object product: allegroProducts) {
                                     mProductList.add(createFoundProduct((HashMap)product, "allegro"));
                                 }

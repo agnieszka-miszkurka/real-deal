@@ -38,6 +38,17 @@
             android:layout_height="match_parent"
             android:visibility="gone">
         </ListView>
+
+        <TextView
+            android:id="@+id/no_searches_msg_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_searches_message"
+            android:layout_margin="@dimen/huge_margin"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

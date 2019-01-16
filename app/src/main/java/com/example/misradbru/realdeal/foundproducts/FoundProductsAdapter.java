@@ -29,7 +29,6 @@ public class FoundProductsAdapter  extends ArrayAdapter<FoundProduct> {
         TextView providerTextView = convertView.findViewById(R.id.found_product_provider_tv);
         TextView priceTextView = convertView.findViewById(R.id.price_tv);
         FoundProduct product = getItem(position);
-        assert product != null;
         titleTextView.setText(product.getName());
         String price = product.getPrice() + " " + product.getCurrency();
         providerTextView.setText(product.getProvider());

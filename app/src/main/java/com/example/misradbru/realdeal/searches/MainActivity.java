@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.misradbru.realdeal.R;
 import com.example.misradbru.realdeal.addsearch.AddSearchActivity;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
     private SearchesContract.UserActionListener mActionsListener;
     private ProgressBar mProgressBar;
     private TokenRepository tokenRepository;
+    private SearchesAdapter mSearchesAdapter;
+    private TextView mNoSearchesTextView;
 
     private static final String TAG = "MainActivity";
 
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         mProductListView = findViewById(R.id.products_list);
         mProgressBar = findViewById(R.id.searches_progressbar);
         mActionsListener = new SearchesPresenter(new ProductRepositoryImpl(), this);
+        mNoSearchesTextView = findViewById(R.id.no_searches_msg_textview);
+
 
         mProductListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -238,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
     @Override
     protected void onResume() {
         super.onResume();
-        SearchesAdapter mSearchesAdapter =
+        mSearchesAdapter =
                 new SearchesAdapter(this.getApplicationContext(), new ArrayList<SearchProduct>());
         mProductListView.setAdapter(mSearchesAdapter);
         mActionsListener.loadSearchProducts(mAuth.getUid(), mSearchesAdapter);
@@ -260,9 +265,26 @@ public class MainActivity extends AppCompatActivity implements SearchesContract.
         if (active) {
             mProgressBar.setVisibility(View.VISIBLE);
             mProductListView.setVisibility(View.GONE);
+            showNoSearchesMessage(false);
         } else {
             mProgressBar.setVisibility(View.GONE);
-            mProductListView.setVisibility(View.VISIBLE);
+            if (mSearchesAdapter.getCount() == 0) {
+                showNoSearchesMessage(true);
+                mProductListView.setVisibility(View.GONE);
+
+            } else {
+                mProductListView.setVisibility(View.VISIBLE);
+                showNoSearchesMessage(false);
+            }
+        }
+    }
+
+    @Override
+    public void showNoSearchesMessage(boolean show) {
+        if (show) {
+            mNoSearchesTextView.setVisibility(View.VISIBLE);
+        } else {
+            mNoSearchesTextView.setVisibility(View.GONE);
         }
     }
 
