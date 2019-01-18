@@ -16,10 +16,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * class communicating with cloud firestore
+ */
 public class ProductRepositoryImpl implements ProductRepository {
     private static final String TAG = "ProductRepositoryImpl";
     private static final String SEARCHES_COLLECTION = "searches";
@@ -99,6 +104,25 @@ public class ProductRepositoryImpl implements ProductRepository {
                                 for (Object product: allegroProducts) {
                                     mProductList.add(createFoundProduct((HashMap)product, "allegro"));
                                 }
+
+                                List ebayProducts = (ArrayList) document.getData().get("ebay");
+
+                                for (Object product: ebayProducts) {
+                                    mProductList.add(createFoundProduct((HashMap)product, "ebay"));
+                                }
+
+                                // sorting found products list by price
+                                Collections.sort(mProductList,new Comparator<FoundProduct>() {
+
+
+                                    @Override
+                                    public int compare(FoundProduct f1, FoundProduct f2) {
+                                        if (f1.getPrice().equals(f2.getPrice())) {
+                                            return 0;
+                                        }
+                                        return f1.getPrice().compareTo(f2.getPrice());
+                                    }
+                                });
                             }
 
                             foundProductsAdapter.addAll(mProductList);

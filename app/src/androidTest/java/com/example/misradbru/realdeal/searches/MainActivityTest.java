@@ -45,11 +45,8 @@ public class MainActivityTest {
         ProgressBar progressBar = mainActivity.findViewById(R.id.searches_progressbar);
         ListView searchesLV = mainActivity.findViewById(R.id.products_list);
 
-        mainActivity.setProgressIndicator(true);
-
         assertNotNull("View is null.", progressBar);
         assertNotNull("View is null.", searchesLV);
-
     }
 
     @Test
