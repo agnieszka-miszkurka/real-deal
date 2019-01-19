@@ -16,7 +16,8 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimaryDark" />
-        <service android:name=".firebasemessaging.FoundProductFirebaseMessagingService">
+        <service android:name=".firebasemessaging.FoundProductFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
