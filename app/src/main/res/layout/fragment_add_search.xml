@@ -12,6 +12,7 @@
         android:id="@+id/basket_imageview"
         android:layout_width="150dp"
         android:layout_height="110dp"
+        android:autofillHints="@string/shopping_bag"
         android:contentDescription="@string/shopping_bag"
         android:scaleType="centerInside"
         android:src="@drawable/basket" />
@@ -22,6 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
         android:ems="10"
+        android:autofillHints="@string/name_of_the_product"
         android:hint="@string/name_of_the_product"
         android:inputType="textPersonName" />
 
@@ -31,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
         android:ems="10"
+        android:autofillHints="@string/search_phrase"
         android:hint="@string/search_phrase"
         android:inputType="textPersonName" />
 
@@ -40,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
         android:ems="10"
+        android:autofillHints="@string/minimum_price"
         android:hint="@string/minimum_price"
         android:inputType="number" />
 
@@ -49,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_margin"
         android:ems="10"
+        android:autofillHints="@string/maximum_price"
         android:hint="@string/maximum_price"
         android:inputType="number" />
 
