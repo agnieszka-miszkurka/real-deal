@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "316880181119",
+    "firebase_url": "https://realdeal-68b58.firebaseio.com",
+    "project_id": "realdeal-68b58",
+    "storage_bucket": "realdeal-68b58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316880181119:android:783c07c712e58533",
+        "android_client_info": {
+          "package_name": "com.example.misradbru.realdeal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316880181119-pq6pl736s1aja494flo4kbdi64i4668i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.misradbru.realdeal",
+            "certificate_hash": "2de506b176e0a220a1767d502c9717459b1aef39"
+          }
+        },
+        {
+          "client_id": "316880181119-rbipqqmrqphum8ilg5h994qb9g94nrk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzKAY17RpB4V2NcDjte1cNUx05rOtznS4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316880181119-rbipqqmrqphum8ilg5h994qb9g94nrk5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
